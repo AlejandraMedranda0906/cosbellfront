@@ -101,7 +101,7 @@
 }
 .star-icons, .comment-stars {
   color: #e7b3d6;
-  font-size: 1.5em;
+  font-size: 0.6em;
 }
 .star-icons .filled, .comment-stars .filled {
   color: var(--cosbell-pink);
