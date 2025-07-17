@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #F8F4EC;
+  padding: 20px 0;
+}
+
+.text-right.forget-pass a{
+  font-size: 12px;
+  color: var(--cosbell-btn-yellow);
+  text-decoration: none;
+}
+.sign-up{
+  color: #fff;
+}
+.sign-up a{
+  color: var(--cosbell-btn-yellow);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgot-link, .register-link {
+  color: var(--cosbell-btn-yellow);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.forgot-link:hover, .register-link:hover {
+  color: var(--cosbell-pink);
+  text-decoration: underline;
+}
+
+.separator {
+  color: #ffffff;
+  font-weight: 400;
+  margin: 0 8px;
+}
+
+.flashbang-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.1s ease-out;
+  pointer-events: none;
+}
+
+
+.btn-my {
+  width: 100%;      /* ancho completo igual que los inputs */
+  padding: 12px;    /* un poco más grande verticalmente */
+  font-size: 16px;  /* para que el texto se vea un poco más grande */
+  background-color: #d39e00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+
+.btn-my:hover:not(:disabled) {
+  background-color: #b88600;
+}
+
+.btn-my:disabled {
+  background-color: #f0c75e;
+  cursor: not-allowed;
+}
+
+.auth {
+  margin-top: 80px;         /* ya lo tienes, para bajarlo un poco */
+  padding: 38px 38px;       /* más espacio interno */
+  min-height: 195px;        /* aumenta la altura mínima */
+  border-radius: 12px;      /* opcional: bordes más suaves */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* sombra suti */
+}

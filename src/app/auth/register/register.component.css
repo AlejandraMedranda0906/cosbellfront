@@ -1,0 +1,112 @@
+/* Aplica a los inputs que tengan ambas clases: form-control y input-field */
+/*input.form-control.input-field {
+  min-width: 150px !important;
+  max-width: 500px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}*/
+.login{
+  color: #fff;
+}
+.login a{
+  color: #d39e00;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.flashbang-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white; 
+  z-index: 9999; 
+  opacity: 1; 
+  transition: opacity 0.1s ease-out;
+  pointer-events: none;
+}
+
+.simple-keyboard {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.simple-keyboard .hg-button {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.simple-keyboard .hg-button:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.simple-keyboard .hg-button.hg-activeBtn {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.simple-keyboard .hg-row {
+  display: flex;
+  justify-content: center;
+}
+
+.simple-keyboard .hg-button {
+  flex: 1;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 14px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  
+}
+
+.register-container {
+  min-height: 100vh;
+  background-color: #F8F4EC;
+  padding: 60px 0;
+}
+
+
+.btn-my {
+  background-color: #d39e00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  width: 100%;        /* igual ancho que inputs */
+  padding: 12px;      /* para que el botón sea más grande */
+  font-size: 16px;    /* mismo tamaño de letra */
+}
+
+.btn-my:hover:not(:disabled) {
+  background-color: #b88600;
+}
+
+.btn-my:disabled {
+  background-color: #f0c75e;
+  cursor: not-allowed;
+}
+
+.user-image {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%; /* <-- Esto la hace circular */
+  border: 3px solid #d39e00; /* Borde opcional para que combine con el diseño */
+  margin-bottom: 25px;
+}

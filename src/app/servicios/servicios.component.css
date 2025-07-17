@@ -1,0 +1,133 @@
+body {
+  background-color: #F8F4EC; /* Un beige muy claro como fondo general */
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background-color: #FFFFFF; /* Fondo blanco para las tarjetas */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 25px;
+  text-align: center;
+}
+
+.card-title {
+  color: #6C5B7B; /* Un violeta suave para los títulos */
+  font-size: 1.6em;
+  margin-bottom: 15px;
+}
+
+.card-text {
+  color: #8C7B9B; /* Un gris-violeta para el texto */
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.alert-info {
+  background-color: #D4E6F1; /* Azul pastel para la alerta */
+  color: #34495E; /* Un azul oscuro para el texto de la alerta */
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 1.2em;
+}
+
+h2 {
+  color: #6C5B7B; /* Mismo violeta suave para el título principal */
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+.servicios-container {
+    padding: 30px;
+    background-color: var(--cosbell-light-pink);
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.servicios-container h2 {
+    color: var(--cosbell-dark-purple);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    border-bottom: 2px solid var(--cosbell-pink);
+    padding-bottom: 15px;
+}
+
+.servicio-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--cosbell-light-pink);
+}
+
+.servicio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.servicio-card-title {
+    color: var(--cosbell-dark-purple);
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.servicio-card-text {
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+.servicio-card-price {
+    color: var(--cosbell-pink);
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-top: auto; /* Empuja el precio y el botón hacia abajo */
+    margin-bottom: 15px;
+}
+
+.servicio-button {
+    background-color: var(--cosbell-btn-yellow);
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.servicio-button:hover {
+    background-color: #c08c00;
+}
+
+.alert-no-servicios {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+}

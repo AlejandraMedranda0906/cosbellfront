@@ -1,0 +1,27 @@
+<div class="promotions-container">
+  <div class="promotions-header">
+    <h3>Promociones Vigentes</h3>
+  </div>
+  
+  <div *ngIf="promotions.length === 0" class="alert alert-info">
+    No hay promociones activas en este momento.
+  </div>
+
+  <div class="promotions-grid">
+    <div class="promotion-card" *ngFor="let promotion of promotions"
+         [ngStyle]="promotion.image_url ? {'background-image': 'url(' + promotion.image_url + ')', 'background-size': 'cover', 'background-position': 'center', 'position': 'relative', 'overflow': 'hidden'} : {}">
+      <div *ngIf="promotion.image_url" class="promotion-overlay"></div>
+      <div class="card-body">
+        <h5 class="promotion-card-title">{{ promotion.name }}</h5>
+        <p class="promotion-card-description">{{ promotion.description }}</p>
+        <p class="promotion-card-dates">
+          Vigencia: {{ promotion.startDate }} hasta el {{ promotion.endDate }}
+        </p>
+        <div *ngIf="promotion.conditions" class="promotion-card-conditions">
+          <h6>Condiciones:</h6>
+          <p>{{ promotion.conditions }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-cosbell">
+  <div class="container-fluid">
+    <a class="navbar-brand navbar-logo" routerLink="/">
+      <span class="brand-name">Cosbell</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" style="cursor: pointer;" *ngIf="isLoggedIn && (userRole === 'CLIENT' || userRole === 'EMPLOYEE' || userRole === 'ADMIN')">
+          <a class="nav-link" (click)="goToDashboard()">Inicio</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'CLIENT'">
+          <a class="nav-link" routerLink="/mis-citas">Mis Citas</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'CLIENT'">
+          <a class="nav-link" routerLink="/agendar-cita">Agendar Cita</a>
+        </li>
+        
+        <li class="nav-item" style="margin-right: 10px;" *ngIf="!isLoggedIn">
+          <button class="navbar-button" [ngClass]="{'activo': currentRoute !== '/register'}" (click)="goToLogin()">Iniciar Sesión</button>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <button class="navbar-button navbar-button-secondary" [ngClass]="{'activo': currentRoute === '/register'}" (click)="goToRegister()">Registrarse</button>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <button class="navbar-button navbar-button-logout" (click)="logout()">Cerrar Sesión</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav> 

@@ -1,0 +1,81 @@
+<div class="admin-servicios-container">
+  <div class="servicios-header">
+    <h2>Gestión de Servicios</h2>
+  </div>
+
+  <div class="table-section">
+    <h3>Servicios Actuales</h3>
+    
+    <div *ngIf="servicios.length === 0" class="alert-info">
+      No hay servicios disponibles.
+    </div>
+    
+    <div class="servicios-table" *ngIf="servicios.length > 0">
+      <div class="table-header">
+        <div class="table-cell">ID</div>
+        <div class="table-cell">Nombre</div>
+        <div class="table-cell">Duración (min)</div>
+        <div class="table-cell">Precio</div>
+        <div class="table-cell">Descripción</div>
+        <div class="table-cell">Acciones</div>
+      </div>
+      
+      <div class="table-row" *ngFor="let servicio of servicios">
+        <div class="table-cell">{{ servicio.id }}</div>
+        <div class="table-cell">{{ servicio.name }}</div>
+        <div class="table-cell">{{ servicio.duration }}</div>
+        <div class="table-cell">${{ servicio.price | number:'1.2-2' }}</div>
+        <div class="table-cell">{{ servicio.description }}</div>
+        <div class="table-cell">
+          <button class="edit-button" (click)="editServicio(servicio)">Editar</button>
+          <button class="delete-button" (click)="deleteServicio(servicio.id!)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="!showForm" class="admin-button-primary" (click)="newServicio()" style="margin-top: 24px;">Añadir servicio</button>
+
+    <div class="form-section" *ngIf="showForm" style="margin-top: 32px;">
+      <h3>{{ selectedServicio ? 'Editar Servicio' : 'Añadir Nuevo Servicio' }}</h3>
+      <form (ngSubmit)="saveServicio()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" [(ngModel)]="newServicioForm.name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="duration">Duración (min):</label>
+            <input type="number" id="duration" [(ngModel)]="newServicioForm.duration" name="duration" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Precio:</label>
+            <input type="number" id="price" [(ngModel)]="newServicioForm.price" name="price" required step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="description">Descripción:</label>
+            <textarea id="description" [(ngModel)]="newServicioForm.description" name="description"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="categoryId">Categoría:</label>
+            <select id="categoryId" [(ngModel)]="newServicioForm.categoryId" name="categoryId" required>
+              <option [ngValue]="undefined">Selecciona una categoría</option>
+              <option *ngFor="let cat of categorias" [ngValue]="cat.id">{{ cat.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="imageUrl">Imagen (URL):</label>
+            <input type="text" id="imageUrl" [(ngModel)]="newServicioForm.imageUrl" name="imageUrl" placeholder="https://...">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="admin-button-primary">Guardar Servicio</button>
+          <button type="button" class="admin-button-secondary" (click)="showForm = false" *ngIf="selectedServicio || showForm">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

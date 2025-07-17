@@ -1,0 +1,121 @@
+.promotions-container {
+  padding: 30px;
+  background-color: var(--cosbell-light-pink);
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.promotions-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h3 {
+  color: var(--cosbell-dark-purple);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  border-bottom: 2px solid var(--cosbell-pink);
+  padding-bottom: 15px;
+}
+
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.promotion-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--cosbell-light-pink);
+  position: relative;
+  overflow: hidden;
+}
+.promotion-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.7);
+  z-index: 2;
+  border-radius: 12px;
+}
+.promotion-card .card-body,
+.promotion-card-title,
+.promotion-card-description,
+.promotion-card-dates,
+.promotion-card-conditions {
+  position: relative;
+  z-index: 3;
+}
+
+.promotion-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  padding: 0;
+}
+
+.promotion-card-title {
+  color: var(--cosbell-dark-purple);
+  font-size: 1.6em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.promotion-card-description {
+  color: #555;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.promotion-card-dates {
+  font-size: 1rem;
+  color: var(--cosbell-pink);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.promotion-card-conditions {
+  border-top: 2px solid var(--cosbell-light-pink);
+  padding-top: 15px;
+  margin-top: 20px;
+}
+
+.promotion-card-conditions h6 {
+  color: var(--cosbell-dark-purple);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.promotion-card-conditions p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.alert-info {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1em;
+} 

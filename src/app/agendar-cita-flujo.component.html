@@ -1,0 +1,37 @@
+<div class="agendar-flujo-container">
+  <div class="flujo-row">
+    <div class="servicio-select-block">
+      <label for="servicio-select" class="form-label">Servicio:</label>
+      <select id="servicio-select" class="form-select" [(ngModel)]="selectedServicioId" (change)="onServicioChange()" [disabled]="servicioPreseleccionado">
+        <option [ngValue]="null">-- Selecciona un servicio --</option>
+        <option *ngFor="let s of servicios" [ngValue]="s.id">{{ s.name }}</option>
+      </select>
+    </div>
+    <div class="profesional-select-block">
+      <label for="profesional-select" class="form-label">Selecciona un profesional:</label>
+      <select id="profesional-select" class="form-select" [(ngModel)]="selectedEmployeeId" (change)="onEmployeeChange()" [disabled]="!selectedServicioId">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let emp of filteredEmployees" [ngValue]="emp.id">{{ emp.name }}</option>
+      </select>
+    </div>
+  </div>
+  <app-calendar-view *ngIf="selectedEmployeeId && selectedServicioId"
+    [events]="events"
+    [availableSlots]="availableSlots"
+    (slotSelected)="onSlotSelected($event)"
+    (visibleRangeChange)="onVisibleRangeChange($event)"></app-calendar-view>
+
+  <div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+      <app-agendar-cita
+        [preselectedFecha]="selectedDate"
+        [preselectedHora]="selectedTime"
+        [preselectedEmployeeId]="selectedEmployeeId"
+        [preselectedServicioId]="preselectedServicioId"
+        [servicios]="employeeServices"
+        (close)="closeModal()">
+      </app-agendar-cita>
+    </div>
+  </div>
+</div> 

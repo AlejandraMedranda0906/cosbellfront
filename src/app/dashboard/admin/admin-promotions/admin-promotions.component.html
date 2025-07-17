@@ -1,0 +1,82 @@
+<div class="admin-promotions-container">
+  <div class="promotions-header">
+    <h2>Gestión de Promociones</h2>
+  </div>
+
+  <div class="table-section">
+    <h3>Promociones Actuales</h3>
+    
+    <div *ngIf="promotions.length === 0" class="alert-info">
+      No hay promociones disponibles.
+    </div>
+    
+    <div class="promotions-table" *ngIf="promotions.length > 0">
+      <div class="table-header">
+        <div class="table-cell">ID</div>
+        <div class="table-cell">Nombre</div>
+        <div class="table-cell">Descripción</div>
+        <div class="table-cell">Inicio</div>
+        <div class="table-cell">Fin</div>
+        <div class="table-cell">Condiciones</div>
+        <div class="table-cell">Acciones</div>
+      </div>
+      
+      <div class="table-row" *ngFor="let promotion of promotions">
+        <div class="table-cell">{{ promotion.id }}</div>
+        <div class="table-cell">{{ promotion.name }}</div>
+        <div class="table-cell">{{ promotion.description }}</div>
+        <div class="table-cell">{{ promotion.startDate }}</div>
+        <div class="table-cell">{{ promotion.endDate }}</div>
+        <div class="table-cell">{{ promotion.conditions }}</div>
+        <div class="table-cell">
+          <button class="edit-button" (click)="editPromotion(promotion)">Editar</button>
+          <button class="delete-button" (click)="deletePromotion(promotion.id!)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="!showForm" class="admin-button-primary" (click)="newPromotion()" style="margin-top: 24px;">Añadir promoción</button>
+
+    <div class="form-section" *ngIf="showForm" style="margin-top: 32px;">
+      <h3>{{ selectedPromotion ? 'Editar Promoción' : 'Añadir Nueva Promoción' }}</h3>
+      <form (ngSubmit)="savePromotion()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" [(ngModel)]="newPromotionForm.name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Descripción:</label>
+            <textarea id="description" [(ngModel)]="newPromotionForm.description" name="description" required></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="startDate">Fecha de Inicio:</label>
+            <input type="date" id="startDate" [(ngModel)]="newPromotionForm.startDate" name="startDate" required>
+          </div>
+          <div class="form-group">
+            <label for="endDate">Fecha de Fin:</label>
+            <input type="date" id="endDate" [(ngModel)]="newPromotionForm.endDate" name="endDate" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="conditions">Condiciones:</label>
+            <textarea id="conditions" [(ngModel)]="newPromotionForm.conditions" name="conditions"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="image_url">Imagen de fondo (URL):</label>
+            <input type="text" id="image_url" [(ngModel)]="newPromotionForm.image_url" name="image_url" placeholder="https://...">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="admin-button-primary">Guardar Promoción</button>
+          <button type="button" class="admin-button-secondary" (click)="showForm = false" *ngIf="selectedPromotion || showForm">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,64 @@
+<div class="servicio-detalle-container" *ngIf="servicio">
+  <div class="servicio-detalle-card mx-auto">
+    <img *ngIf="servicio.imageUrl" [src]="servicio.imageUrl" [alt]="servicio.name" class="servicio-img-main mb-4">
+    <h1 class="servicio-title mb-3">{{ servicio.name }}</h1>
+    <div class="servicio-info mb-3">
+      <span class="servicio-price">${{ servicio.price }}</span>
+      <span class="servicio-duration ms-3">{{ servicio.duration }} min</span>
+    </div>
+    <p *ngIf="servicio.description" class="servicio-description mb-2">{{ servicio.description }}</p>
+    <p *ngIf="servicio.descripcionExtend" class="servicio-description-extend mb-4">{{ servicio.descripcionExtend }}</p>
+    <button class="servicio-button" (click)="goToAgendarCita()">Agendar Cita</button>
+  </div>
+</div>
+<div *ngIf="ratingsLoaded" class="servicio-ratings-block mt-5">
+  <h3 class="ratings-title mb-3">Valoraciones de clientes</h3>
+  <div *ngIf="totalRatings > 0; else noRatings">
+    <div class="row align-items-center mb-4">
+      <div class="col-12 col-md-4 text-center mb-3 mb-md-0">
+        <div class="average-rating-display">
+          <span class="average-rating">{{ averageRating }}</span>
+          <span class="star-icons">
+            <ng-container *ngFor="let s of [1,2,3,4,5]; let i = index">
+              <i class="fa fa-star" [class.filled]="i < Math.round(averageRating)"></i>
+            </ng-container>
+          </span>
+        </div>
+        <div class="total-ratings">Basado en {{ totalRatings }} reseñas</div>
+      </div>
+      <div class="col-12 col-md-5">
+        <div class="star-bars">
+          <div *ngFor="let count of starCounts; let i = index" class="star-bar-row">
+            <span class="star-label">{{5-i}} <i class="fa fa-star"></i></span>
+            <div class="bar-bg">
+              <div class="bar-fill" [style.width]="(count/totalRatings*100)+'%'"></div>
+            </div>
+            <span class="star-count">{{ count }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3 text-center">
+        <div class="recommend-percent mb-2">
+          <span class="percent">{{ recommendPercent }}%</span> recomendaría este servicio
+        </div>
+      </div>
+    </div>
+    <div class="ratings-comments-list mt-4">
+      <h5 class="mb-3">Comentarios recientes</h5>
+      <div *ngFor="let r of ratings | slice:0:5" class="rating-comment mb-3 p-3">
+        <div class="comment-header mb-1">
+          <span class="comment-stars">
+            <ng-container *ngFor="let s of [1,2,3,4,5]; let i = index">
+              <i class="fa fa-star" [class.filled]="i < r.rating"></i>
+            </ng-container>
+          </span>
+          <span class="comment-date ms-2">{{ r.createdAt | date:'shortDate' }}</span>
+        </div>
+        <div class="comment-text">{{ r.comment }}</div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noRatings>
+    <div class="no-ratings">Aún no hay valoraciones para este servicio.</div>
+  </ng-template>
+</div> 

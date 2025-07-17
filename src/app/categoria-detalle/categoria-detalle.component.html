@@ -1,0 +1,27 @@
+<div class="categoria-detalle-container" *ngIf="categoria">
+  <div class="categoria-header text-center mb-5">
+    <img [src]="categoria.imageUrl" [alt]="categoria.name" class="categoria-img mb-3">
+    <h1 class="categoria-title">{{ categoria.name }}</h1>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-4" *ngFor="let servicio of servicios">
+      <div class="servicio-card h-100 shadow-sm" (click)="goToServicio(servicio.id!)" style="cursor:pointer;">
+        <img *ngIf="servicio.imageUrl" [src]="servicio.imageUrl" [alt]="servicio.name" class="servicio-img-top">
+        <div class="card-body p-4 d-flex flex-column align-items-center">
+          <h5 class="servicio-card-title mb-2 text-center">{{ servicio.name }}</h5>
+          <div class="servicio-info mb-2 text-center">
+            <span class="servicio-price">${{ servicio.price }}</span>
+            <span class="servicio-duration ms-2">{{ servicio.duration }} min</span>
+          </div>
+          <p *ngIf="servicio.description" class="servicio-card-text text-center">{{ servicio.description }}</p>
+          <button class="servicio-button mt-3" (click)="agendarCitaDesdeCategoria(servicio.id!) ; $event.stopPropagation()">Agendar Cita</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="servicios.length === 0" class="col-12 text-center">
+      <div class="alert-no-servicios">
+        No hay servicios disponibles en esta categoría.
+      </div>
+    </div>
+  </div>
+</div>

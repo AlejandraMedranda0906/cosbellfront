@@ -1,0 +1,74 @@
+<div class="mis-citas-container">
+  <h2>Mis Citas</h2>
+
+  <div *ngIf="mensaje" class="alert alert-info">{{ mensaje }}</div>
+
+  <div class="filters-section">
+    <div class="filters-row">
+      <div class="filter-group">
+        <label for="filterMonth">Mes:</label>
+        <select id="filterMonth" [(ngModel)]="filterMonth" class="form-control">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [ngValue]="m">{{ m }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filterYear">Año:</label>
+        <input type="number" id="filterYear" [(ngModel)]="filterYear" class="form-control" placeholder="Ej. 2024">
+      </div>
+
+      <div class="filter-group">
+        <label for="filterService">Servicio:</label>
+        <select id="filterService" [(ngModel)]="filterServiceId" class="form-control">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let servicio of servicios" [ngValue]="servicio.id">{{ servicio.name }}</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="filters-actions">
+      <button class="cosbell-button-primary" (click)="aplicarFiltros()">Aplicar Filtros</button>
+      <button class="cosbell-button-secondary" (click)="limpiarFiltros()">Limpiar Filtros</button>
+    </div>
+  </div>    
+  <div *ngIf="citas.length === 0" class="text-center mt-4">
+    <p>No tienes citas existentes.</p>
+  </div>
+
+  <div *ngFor="let cita of citas" class="cita-card">
+    <div class="cita-details">
+      <h3>Servicio: {{ cita.serviceName }}</h3>
+      <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+      <p><strong>Hora:</strong> {{ cita.hora }}</p>
+      <p><strong>Profesional:</strong> {{ cita.employeeName }}</p>
+      <p><strong>Estado:</strong> {{ cita.status }}</p>
+    </div>
+    <div class="cita-actions">
+      <button 
+        class="cosbell-button-primary"
+        (click)="cancelarCita(cita.id)"
+        [disabled]="cita.status === 'CANCELLED'"
+        *ngIf="cita.status !== 'CANCELLED' && cita.status !== 'COMPLETED'"
+      >Cancelar</button>
+      <button 
+        class="cosbell-button-secondary"
+        (click)="editarCita(cita.id)"
+        [disabled]="cita.status === 'CANCELLED'"
+        *ngIf="cita.status !== 'CANCELLED' && cita.status !== 'COMPLETED'"
+      >Modificar</button>
+      <button 
+        class="cosbell-button-primary"
+        *ngIf="(cita.status === 'CANCELLED' || cita.status === 'COMPLETED' || isPastAppointment(cita)) && !cita.hasBeenRated"
+        (click)="goToValorarCita(cita.id)"
+      >Valorar</button>
+      <button 
+        class="chat-button"
+        (click)="openChat(cita.id)"
+        *ngIf="cita.status !== 'CANCELLED'"
+      >Chat</button>
+    </div>
+  </div>
+</div>
+
+<app-chat-modal *ngIf="showChatModal" [appointmentId]="selectedAppointmentId" [currentUserId]="currentUserId" (close)="closeChat()"></app-chat-modal>

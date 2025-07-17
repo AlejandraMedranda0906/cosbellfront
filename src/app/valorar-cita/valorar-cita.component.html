@@ -1,0 +1,62 @@
+<div class="valorar-cita-container">
+  <div class="card">
+    <div class="card-body">
+      <h2>Valorar Cita</h2>
+
+      <div *ngIf="cita">
+        <div class="cita-details-summary">
+          <h3>Servicio: {{ cita.servicio.name }}</h3>
+          <p>Fecha: {{ cita.fecha }}</p>
+          <p>Hora: {{ cita.hora }}</p>
+          <p>Profesional: {{ cita.employee.name }}</p>
+        </div>
+
+    <form [formGroup]="valoracionForm" (ngSubmit)="submitRating()" class="valoracion-form">
+      <div class="form-group text-center">
+        <label>Tu calificación:</label>
+        <div class="star-rating">
+          <span
+            *ngFor="let star of [1, 2, 3, 4, 5]"
+            class="star"
+            [class.filled]="valoracionForm.get('rating')?.value >= star"
+            (click)="setRating(star)"
+          >★</span>
+        </div>
+        <div *ngIf="valoracionForm.get('rating')?.errors?.['required'] && valoracionForm.get('rating')?.touched" class="text-danger">
+          Por favor, selecciona una calificación.
+        </div>
+      </div>
+
+      <div class="form-group mt-3">
+        <label for="comment">Comentario (opcional):</label>
+        <textarea
+          id="comment"
+          formControlName="comment"
+          class="form-control"
+          rows="4"
+          placeholder="Deja tus comentarios aquí...">
+        </textarea>
+        <div *ngIf="valoracionForm.get('comment')?.errors?.['maxlength']" class="text-danger">
+          El comentario no puede exceder los 500 caracteres.
+        </div>
+      </div>
+
+      <div *ngIf="mensaje" class="alert alert-info mt-3">{{ mensaje }}</div>
+
+      <div class="form-actions mt-4 text-center">
+        <button type="submit" class="valorar-button" [disabled]="!valoracionForm.valid">Enviar Valoración</button>
+        <button type="button" class="cancelar-button" (click)="goBack()">Cancelar</button>
+        <button type="button" (click)="openChat()" class="chat-button">Abrir chat con profesional</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="!cita && mensaje" class="alert alert-warning mt-4">
+    {{ mensaje }}
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal del chat fuera del formulario -->
+<app-chat-modal *ngIf="showChatModal" [appointmentId]="cita?.id" [currentUserId]="currentUserId" (close)="closeChat()"></app-chat-modal> 

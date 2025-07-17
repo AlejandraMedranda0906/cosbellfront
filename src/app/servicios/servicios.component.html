@@ -1,0 +1,20 @@
+<div class="servicios-container">
+  <h2 class="mb-4">Nuestros Servicios</h2>
+  <div class="row">
+    <div class="col-md-4 mb-3" *ngFor="let servicio of servicios">
+      <div class="servicio-card">
+        <div class="card-body">
+          <h5 class="servicio-card-title">{{ servicio.name }}</h5>
+          <p class="servicio-card-text">Duración: {{ servicio.duration }} min</p>
+          <p class="servicio-card-price">Precio: ${{ servicio.price }}</p>
+          <button class="servicio-button mt-3" (click)="agendarCita(servicio.id)">Agendar Cita</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="servicios.length === 0" class="col-12">
+      <div class="alert-no-servicios">
+        No hay servicios disponibles por el momento.
+      </div>
+    </div>
+  </div>
+</div>

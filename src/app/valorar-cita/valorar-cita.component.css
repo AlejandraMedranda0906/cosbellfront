@@ -1,0 +1,197 @@
+/* Fondo de toda la página del valorar-cita */
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #F8F4EC; /* Mismo fondo que servicios */
+  padding: 20px 0;
+}
+
+.valorar-cita-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background-color: #FFFFFF;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 25px;
+  text-align: center;
+}
+
+h2 {
+  color: var(--cosbell-dark-purple);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  border-bottom: 2px solid var(--cosbell-pink);
+  padding-bottom: 15px;
+}
+
+.cita-details-summary {
+  background-color: var(--cosbell-light-pink);
+  border: 2px solid var(--cosbell-pink);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cita-details-summary h3 {
+  color: var(--cosbell-dark-purple);
+  margin-bottom: 15px;
+  font-size: 1.6em;
+  font-weight: 600;
+}
+
+.cita-details-summary p {
+  margin-bottom: 8px;
+  color: var(--cosbell-dark-purple);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.valoracion-form .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.valoracion-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--cosbell-dark-purple);
+  font-size: 1.1rem;
+}
+
+.star-rating {
+  display: inline-block;
+  font-size: 2.5rem;
+  color: #e4e5e9; /* Color de estrella sin rellenar */
+  cursor: pointer;
+  margin: 15px 0;
+}
+
+.star {
+  padding: 0 5px;
+  transition: color 0.3s ease;
+}
+
+.star.filled {
+  color: var(--cosbell-btn-yellow); /* Color de estrella rellena usando el amarillo de Cosbell */
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 2px solid var(--cosbell-light-pink);
+  padding: 12px 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--cosbell-pink);
+  box-shadow: 0 0 0 3px rgba(221, 94, 138, 0.1);
+}
+
+textarea.form-control {
+  resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.valorar-button {
+  background-color: var(--cosbell-btn-yellow);
+  color: #ffffff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.valorar-button:hover {
+  background-color: #c08c00;
+}
+
+.valorar-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.cancelar-button {
+  background-color: #6c757d;
+  color: #ffffff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.cancelar-button:hover {
+  background-color: #5a6268;
+}
+
+.chat-button {
+  background-color: var(--cosbell-pink);
+  color: #ffffff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.chat-button:hover {
+  background-color: #c44d7a;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: left;
+}
+
+.alert-info {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-weight: 600;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-weight: 600;
+} 

@@ -1,0 +1,64 @@
+/* Estilos base del footer */
+.footer-section {
+  background: #23272b;
+  color: #fff;
+  border-top: 4px solid #eab308;
+  font-size: 1rem;
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+}
+.footer-logo .logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  color: #eab308;
+  margin-bottom: 0;
+}
+.footer-logo .logo-subtitle {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #eab308;
+  margin-bottom: 1rem;
+}
+.footer-links li, .footer-contact li {
+  margin-bottom: 0.5rem;
+  color: #fff;
+  transition: color 0.2s;
+}
+.footer-links li i, .footer-contact li i {
+  color: #eab308;
+  margin-right: 0.5rem;
+}
+.footer-links li:hover, .footer-contact li:hover {
+  color: #eab308;
+}
+.footer-social-icons a {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-right: 0.7rem;
+  transition: color 0.2s;
+}
+.footer-social-icons a:hover {
+  color: #eab308;
+}
+.copyright-text {
+  font-size: 0.95rem;
+  color: #bbb;
+  margin-top: 1.5rem;
+}
+@media (max-width: 767px) {
+  .footer-section {
+    text-align: center;
+  }
+  .footer-logo .logo-text {
+    font-size: 1.5rem;
+  }
+  .footer-title {
+    font-size: 1rem;
+  }
+} 

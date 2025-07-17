@@ -1,0 +1,21 @@
+<div class="client-dashboard">
+  <h2>Bienvenido/a {{ userName }}</h2>
+  <!-- CATEGORÍAS -->
+  <section class="categorias-section container my-5">
+    <h2 class="text-center mb-4">Nuestros Servicios</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4 mb-4" *ngFor="let categoria of categorias">
+        <div class="categoria-card h-100" (click)="goToCategoria(categoria.id)">
+          <img [src]="categoria.imageUrl" [alt]="categoria.name" class="categoria-img mb-3">
+          <h5 class="categoria-card-title">{{ categoria.name }}</h5>
+        </div>
+      </div>
+      <div *ngIf="categorias.length === 0" class="col-12 text-center">
+        <div class="alert-no-servicios">
+          No hay servicios disponibles por el momento.
+        </div>
+      </div>
+    </div>
+  </section>
+  <app-promotions-list></app-promotions-list>
+</div>

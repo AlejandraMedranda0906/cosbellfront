@@ -1,0 +1,160 @@
+.admin-dashboard {
+    padding: 30px;
+    background-color: var(--cosbell-light-pink);
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin: 20px auto;
+    max-width: 1400px;
+    min-height: 80vh;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.dashboard-header h2 {
+    color: var(--cosbell-dark-purple);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    border-bottom: 2px solid var(--cosbell-pink);
+    padding-bottom: 15px;
+}
+
+.admin-layout {
+    display: flex;
+    gap: 30px;
+    height: calc(100vh - 200px);
+}
+
+.sidebar {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--cosbell-light-pink);
+    width: 280px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    background: linear-gradient(135deg, var(--cosbell-dark-purple), var(--cosbell-pink));
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.sidebar-nav {
+    padding: 20px 0;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 5px;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 15px 20px;
+    color: var(--cosbell-dark-purple);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background-color: var(--cosbell-light-pink);
+    color: var(--cosbell-pink);
+    border-left-color: var(--cosbell-pink);
+}
+
+.sidebar-nav a.active {
+    background-color: var(--cosbell-light-pink);
+    color: var(--cosbell-pink);
+    border-left-color: var(--cosbell-pink);
+    font-weight: 600;
+}
+
+.content {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--cosbell-light-pink);
+    padding: 25px;
+    overflow-y: auto;
+}
+
+/* Estilos para componentes hijos que usen cosbell-card */
+.cosbell-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid var(--cosbell-light-pink);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cosbell-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cosbell-card h3 {
+    color: var(--cosbell-dark-purple);
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.cosbell-button {
+    background-color: var(--cosbell-btn-yellow);
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.cosbell-button:hover {
+    background-color: #c08c00;
+}
+
+@media (max-width: 768px) {
+    .admin-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .sidebar-nav a {
+        padding: 12px 15px;
+        font-size: 1em;
+    }
+    
+    .content {
+        padding: 20px;
+    }
+}

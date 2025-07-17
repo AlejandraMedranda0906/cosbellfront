@@ -1,0 +1,26 @@
+<div class="admin-dashboard">
+  <div class="dashboard-header">
+    <h2>Panel de Administrador</h2>
+  </div>
+
+  <div class="admin-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3>Navegación</h3>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a routerLink="./citas" routerLinkActive="active">📅 Citas Programadas</a></li>
+          <li><a routerLink="./servicios" routerLinkActive="active">🛠️ Gestión de Servicios</a></li>
+          <li><a routerLink="./promociones" routerLinkActive="active">🎉 Gestión de Promociones</a></li>
+          <li><a routerLink="./registrar-profesional" routerLinkActive="active">👨‍💼 Registrar Profesional</a></li>
+          <li><a routerLink="./personal" routerLinkActive="active">🙍Gestión del Personal</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+/* Fondo general y contenedor */
+.calendar-container {
+  background-color: #F8F4EC;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.10);
+  padding: 30px 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.fc {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 10px;
+}
+
+.fc-toolbar-title {
+  color: var(--cosbell-dark-purple, #6C5B7B);
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.fc-button {
+  background-color: var(--cosbell-btn-yellow, #eab308);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+.fc-button:hover, .fc-button:focus {
+  background-color: #c08c00;
+}
+
+.fc-col-header-cell-cushion, .fc-timegrid-slot-label-cushion {
+  color: var(--cosbell-dark-purple, #6C5B7B);
+  font-weight: 500;
+}
+
+/* Bloques disponibles (verde) */
+.fc-bg-event {
+  background-color: #25d366 !important;
+  opacity: 0.18 !important;
+  border-radius: 6px;
+}
+
+/* Bloques ocupados (gris claro) */
+.fc-bg-event[style*='#e5e7eb'] {
+  background-color: #e5e7eb !important;
+  opacity: 0.22 !important;
+  border-radius: 6px;
+}
+
+/* Citas reales (gris oscuro) */
+.fc-event-main {
+  background-color: #bdbdbd !important;
+  color: #fff !important;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+/* Tooltip para eventos */
+.fc-event-title {
+  color: var(--cosbell-dark-purple, #6C5B7B);
+  font-size: 1em;
+  font-weight: 600;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 800px) {
+  .calendar-container {
+    padding: 10px 2px;
+    max-width: 99vw;
+  }
+  .fc {
+    padding: 2px;
+  }
+  .fc-toolbar-title {
+    font-size: 1.2em;
+  }
+} 
