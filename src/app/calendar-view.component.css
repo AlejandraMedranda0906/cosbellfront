@@ -1,16 +1,18 @@
 /* Fondo general y contenedor */
 .calendar-container {
   background-color: #F8F4EC;
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.10);
-  padding: 30px 20px;
-  margin: 20px auto;
-  max-width: 1200px;
+  border-radius: 0; /* opcional: quitar bordes redondos para todo ancho */
+  box-shadow: none; /* opcional: quitar sombra si ya no se necesita */
+  padding: 30px 10px;
+  margin: 0;
+  width: 100vw;
+  max-width: 100vw;
 }
+
 
 .fc {
   background: #fff;
-  border-radius: 12px;
+  border-radius: 90px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   padding: 10px;
 }
@@ -23,7 +25,7 @@
 
 .fc-button {
   background-color: var(--cosbell-btn-yellow, #eab308);
-  color: #fff;
+  color: #af5b5b;
   border: none;
   border-radius: 5px;
   font-weight: 600;
@@ -40,23 +42,23 @@
 
 /* Bloques disponibles (verde) */
 .fc-bg-event {
-  background-color: #25d366 !important;
+  background-color: #2576d3 !important;
   opacity: 0.18 !important;
   border-radius: 6px;
 }
 
 /* Bloques ocupados (gris claro) */
 .fc-bg-event[style*='#e5e7eb'] {
-  background-color: #e5e7eb !important;
+  background-color: #5c5f66 !important;
   opacity: 0.22 !important;
   border-radius: 6px;
 }
 
 /* Citas reales (gris oscuro) */
 .fc-event-main {
-  background-color: #bdbdbd !important;
+  background-color: #8d8a8a !important;
   color: #fff !important;
-  border-radius: 6px;
+  border-radius: 10px;
   font-weight: 600;
   font-size: 1em;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);

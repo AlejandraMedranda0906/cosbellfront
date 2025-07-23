@@ -506,3 +506,15 @@
   font-size: 0.9rem;
   color: #a05a8c;
 }
+
+.about-img {
+  width: 100%;
+  max-width: 350px; /* Aumenta el tamaño aquí */
+  border-radius: 16px; /* Bordes redondeados */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* (Opcional) Sombra suave */
+  transition: transform 0.3s ease;
+}
+
+.about-img:hover {
+  transform: scale(1.03); /* (Opcional) efecto al pasar el mouse */
+}
