@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ConfigService {
-  private apiUrl = 'http://localhost:8081/api/config';
+  private apiUrl = '/api/config';
 
   constructor(private http: HttpClient) { }
 

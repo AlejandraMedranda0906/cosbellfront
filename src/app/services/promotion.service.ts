@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const API_URL = 'http://localhost:8081/api/promotions';
+const API_URL = '/api/promotions';
 
 export interface Promotion {
   id?: number;

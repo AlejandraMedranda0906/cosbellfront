@@ -26,7 +26,7 @@ export class ChatWebSocketService {
   connect(appointmentId: number): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client = new Client({
-        webSocketFactory: () => new SockJS('http://localhost:8081/ws'),
+        webSocketFactory: () => new SockJS('/ws'),
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,

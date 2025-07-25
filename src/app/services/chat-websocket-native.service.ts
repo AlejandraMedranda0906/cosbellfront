@@ -15,7 +15,7 @@ export class ChatWebSocketNativeService {
   connect(appointmentId: number): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        this.ws = new WebSocket(`ws://localhost:8081/ws-native`);
+        this.ws = new WebSocket(`/ws-native`);
         
         this.ws.onopen = () => {
           console.log('Conectado al WebSocket nativo');

@@ -35,7 +35,7 @@ export class ResetPasswordComponent {
     if (this.form.invalid || !this.token) return;
     this.loading = true;
     this.http.post(
-      'http://localhost:8081/api/auth/reset-password?token=' + this.token + '&newPassword=' + this.form.value.newPassword,
+      '/api/auth/reset-password?token=' + this.token + '&newPassword=' + this.form.value.newPassword,
       null,
       { responseType: 'text' }
     )

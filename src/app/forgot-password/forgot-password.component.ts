@@ -25,7 +25,7 @@ export class ForgotPasswordComponent {
   onSubmit() {
     if (this.form.invalid) return;
     this.loading = true;
-    this.http.post('http://localhost:8081/api/auth/forgot-password?email=' + this.form.value.email, null)
+    this.http.post('/api/auth/forgot-password?email=' + this.form.value.email, null)
       .subscribe({
         next: () => {
           this.mensaje = 'Si el correo existe, se ha enviado un enlace de recuperación.';

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-const API_URL = 'http://localhost:8081/api/auth';
+const API_URL = 'api/auth';
 
 interface AuthResponse {
   token: string;

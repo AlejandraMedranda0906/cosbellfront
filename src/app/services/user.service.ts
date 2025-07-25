@@ -7,7 +7,7 @@ export interface UserData {
   password: string;
 }
 
-const API_URL = 'http://localhost:8081/users';
+const API_URL = '/users';
 
 @Injectable({
   providedIn: 'root'

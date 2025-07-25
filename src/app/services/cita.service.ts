@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const API_URL = 'http://localhost:8081/api/citas';
-const HORARIO_API_URL = 'http://localhost:8081/api/horario';
+const API_URL = '/api/citas';
+const HORARIO_API_URL = '/api/horario';
 
 @Injectable({
   providedIn: 'root'

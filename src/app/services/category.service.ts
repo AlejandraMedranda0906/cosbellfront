@@ -10,7 +10,7 @@ export interface Category {
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-  private apiUrl = 'http://localhost:8081/api/category';
+  private apiUrl = '/api/category';
 
   constructor(private http: HttpClient) {}
 
