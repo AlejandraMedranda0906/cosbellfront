@@ -2,18 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-personal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-personal.component.html',
   styleUrls: ['./admin-personal.component.css']
 })
 export class AdminPersonalComponent implements OnInit {
   personal: any[] = [];
+  personalFiltrado: any[] = [];
   loading = true;
   error = '';
+
+  filtroNombre: string = '';
+  filtroRol: string | null = null;
+  rolesDisponibles: string[] = [];
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -26,6 +32,8 @@ export class AdminPersonalComponent implements OnInit {
     this.userService.getAllPersonal().subscribe({
       next: (data) => {
         this.personal = data;
+        this.personalFiltrado = [...data];
+        this.rolesDisponibles = [...new Set(data.map(p => p.roleName || p.role || (p.roles?.[0]?.name || '')))];
         this.loading = false;
       },
       error: (err) => {
@@ -47,4 +55,19 @@ export class AdminPersonalComponent implements OnInit {
       });
     }
   }
-} 
+
+  filtrarPersonal() {
+    this.personalFiltrado = this.personal.filter(p => {
+      const nombreMatch = p.name?.toLowerCase().includes(this.filtroNombre.toLowerCase());
+      const rol = p.roleName || p.role || (p.roles?.[0]?.name || '');
+      const rolMatch = !this.filtroRol || rol === this.filtroRol;
+      return nombreMatch && rolMatch;
+    });
+  }
+
+  limpiarFiltros() {
+    this.filtroNombre = '';
+    this.filtroRol = null;
+    this.personalFiltrado = [...this.personal];
+  }
+}

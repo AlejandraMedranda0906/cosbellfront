@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
+
 export interface UserData {
   email: string;
   password: string;
+  phone?: string;
 }
 
-const API_URL = '/users';
+
+const API_URL = '/api/users';
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +45,9 @@ export class UserService {
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${API_URL}/${id}`);
   }
+
+  getCurrentUser(): Observable<{ email: string; phone: string }> {
+  return this.http.get<{ email: string; phone: string }>(`${API_URL}/me`);
+}
+
 }

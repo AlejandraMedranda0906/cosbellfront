@@ -30,11 +30,12 @@ export class EmployeeComponent implements OnInit {
     private servicioService: ServicioService,
     private authService: AuthService,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentEmployeeId = this.authService.getUserId();
     this.currentUserId = this.userService.getCurrentUserId();
+
     if (this.currentEmployeeId) {
       this.loadServices();
       this.loadAppointments();
@@ -48,9 +49,11 @@ export class EmployeeComponent implements OnInit {
       console.log('EmployeeComponent: No hay ID de empleado actual, no se cargarán citas.');
       return;
     }
+
     console.log('EmployeeComponent: Cargando citas para el empleado con ID:', this.currentEmployeeId);
     console.log('EmployeeComponent: Filtros actuales:', this.filters);
     console.log('EmployeeComponent: Token en localStorage antes de la solicitud:', localStorage.getItem('token'));
+
     this.citaService.getCitasPorEmpleado(this.filters).subscribe({
       next: (data: any) => {
         this.appointments = data;
@@ -62,7 +65,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   loadServices(): void {
-    this.servicioService.getAllServicios().subscribe({ 
+    this.servicioService.getAllServicios().subscribe({
       next: (data: any) => {
         this.services = data;
       },
@@ -77,42 +80,48 @@ export class EmployeeComponent implements OnInit {
   }
 
   clearFilters(): void {
-    this.filters = {};
-    this.loadAppointments();
+    this.filters = {
+      fecha: '',
+      servicioId: undefined
+    };
+    this.applyFilters();
   }
 
   onDateChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     this.filters.fecha = inputElement.value;
+    this.applyFilters(); // <-- FILTRA automáticamente
   }
 
   onServiceChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.filters.servicioId = selectElement.value ? Number(selectElement.value) : undefined;
+    this.applyFilters(); // <-- FILTRA automáticamente
   }
 
   onClientChange(event: Event): void {
+    // futuro filtro por cliente si deseas implementarlo
   }
 
   changeAppointmentStatus(appointment: any, newStatus: string): void {
     if (appointment.status === newStatus) return;
+
     this.citaService.updateAppointmentStatus(appointment.id, newStatus).subscribe({
       next: (updated: any) => {
         appointment.status = updated.status;
       },
       error: (err: any) => {
         console.error('Error al actualizar el estado de la cita:', err);
-
       }
     });
   }
 
-  openChat(appointmentId: number) {
+  openChat(appointmentId: number): void {
     this.selectedAppointmentId = appointmentId;
     this.showChatModal = true;
   }
 
-  closeChat() {
+  closeChat(): void {
     this.showChatModal = false;
   }
 }

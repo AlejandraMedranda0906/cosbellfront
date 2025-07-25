@@ -1,5 +1,3 @@
-<div *ngIf="showCheck" class="flashbang-overlay"></div>
-
 <div class="row justify-content-center">
   <div class="col-md-4 col-sm-6">
     <div class="card auth auth-card">
@@ -41,13 +39,12 @@
           <div *ngIf="errorMsg" class="alert alert-danger mt-2">
             {{ errorMsg }}
           </div>
-          
+
           <div class="text-center mt-3">
-            <!-- Botón de inicio de sesión -->
             <button type="submit" class="btn btn-my" [disabled]="formLogin.invalid">Ingresar</button>
           </div>
-
         </form>
+
         <div class="text-center mt-2 format">
           <a routerLink="/forgot-password" class="forgot-link">¿Olvidaste la contraseña?</a>
           <span class="separator"> | </span>
@@ -57,139 +54,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="row">
-  <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
-    <div class="card auth">
-      <div class="card-body auth-card">
-        <div class="auth-avatar">
-          <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
-        </div>
-        <form [formGroup]="formLogin" (ngSubmit)="onLogin()">
-          <div class="form-group">
-            <label for="email">Email :</label>
-            <input
-              type="email"
-              id="email"
-              class="form-control"
-              placeholder="Email"
-              formControlName="email"
-            >
-            <div *ngIf="formLogin.get('email')?.invalid && formLogin.get('email')?.touched" class="text-danger">
-              Ingresa un correo válido.
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              class="form-control"
-              placeholder="********"
-              formControlName="password"
-            >
-            <div *ngIf="formLogin.get('password')?.invalid && formLogin.get('password')?.touched" class="text-danger">
-              Ingresa tu contraseña.
-            </div>
-            <div class="text-right forget-pass">
-              <a routerLink="/forget-password">Forget Password?</a>
-            </div>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-my" [disabled]="formLogin.invalid">Crear</button>
-          </div>
-        </form>
-        <div class="text-center sign-up">
-          ¿No tienes cuenta? <a [routerLink]="['/register']">Regístrate aquí</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <!-- <div class="row justify-content-center">
-  <div class="col-md-4 col-sm-6">
-    <div class="card auth">
-      <div class="card-body">
-        <form [formGroup]="formLogin" (ngSubmit)="onLogin()">
-          <div class="form-group">
-            <label for="email">Correo electrónico:</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              formControlName="email"
-              placeholder="ejemplo@correo.com"
-              [class.is-invalid]="formLogin.get('email')?.invalid && formLogin.get('email')?.touched"
-            >
-            <div class="invalid-feedback" *ngIf="formLogin.get('email')?.hasError('required') && formLogin.get('email')?.touched">
-              El correo es obligatorio
-            </div>
-            <div class="invalid-feedback" *ngIf="formLogin.get('email')?.hasError('email') && formLogin.get('email')?.touched">
-              El correo no es válido
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="password">Contraseña:</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              formControlName="password"
-              placeholder="***********"
-              [class.is-invalid]="formLogin.get('password')?.invalid && formLogin.get('password')?.touched"
-            >
-            <div class="invalid-feedback" *ngIf="formLogin.get('password')?.hasError('required') && formLogin.get('password')?.touched">
-              La contraseña es obligatoria
-            </div>
-          </div>
-
-          <div *ngIf="errorMsg" class="alert alert-danger mt-2">
-            {{ errorMsg }}
-          </div>
-
-          <div class="text-center mt-3">
-            <button type="submit" class="btn btn-my" [disabled]="formLogin.invalid">Ingresar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->

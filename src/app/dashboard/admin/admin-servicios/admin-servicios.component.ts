@@ -24,12 +24,17 @@ interface Servicio {
 })
 export class AdminServiciosComponent implements OnInit {
   servicios: Servicio[] = [];
+  serviciosFiltrados: Servicio[] = [];
+
   selectedServicio: Servicio | null = null;
   newServicioForm: Servicio = { name: '', duration: 0, price: 0, description: '', imageUrl: '', categoryId: undefined };
   showForm: boolean = false;
-  categorias: Category[] = [];
 
-  constructor(private servicioService: ServicioService, private categoryService: CategoryService) { }
+  categorias: Category[] = [];
+  filtroNombre: string = '';
+  filtroCategoriaId?: number;
+
+  constructor(private servicioService: ServicioService, private categoryService: CategoryService) {}
 
   ngOnInit(): void {
     this.loadServicios();
@@ -40,6 +45,7 @@ export class AdminServiciosComponent implements OnInit {
     this.servicioService.getAllServicios().subscribe(
       (data: Servicio[]) => {
         this.servicios = data;
+        this.filtrar(); // Inicializar lista filtrada
       },
       (error: any) => {
         console.error('Error al cargar servicios:', error);
@@ -58,6 +64,21 @@ export class AdminServiciosComponent implements OnInit {
     );
   }
 
+  filtrar(): void {
+    this.serviciosFiltrados = this.servicios.filter(servicio => {
+      const coincideNombre = this.filtroNombre.trim().length === 0 ||
+        servicio.name.toLowerCase().includes(this.filtroNombre.toLowerCase());
+      const coincideCategoria = !this.filtroCategoriaId || servicio.categoryId === this.filtroCategoriaId;
+      return coincideNombre && coincideCategoria;
+    });
+  }
+
+  clearFiltros(): void {
+    this.filtroNombre = '';
+    this.filtroCategoriaId = undefined;
+    this.filtrar();
+  }
+
   editServicio(servicio: Servicio): void {
     this.selectedServicio = { ...servicio };
     this.newServicioForm = { ...servicio };
@@ -71,31 +92,23 @@ export class AdminServiciosComponent implements OnInit {
   }
 
   saveServicio(): void {
-    if (this.selectedServicio && this.selectedServicio.id) {
-      // Actualizar servicio existente
+    if (this.selectedServicio?.id) {
       this.servicioService.updateServicio(this.selectedServicio.id, this.newServicioForm).subscribe(
-        (data: Servicio) => {
-          console.log('Servicio actualizado:', data);
+        () => {
           this.loadServicios();
           this.showForm = false;
           this.newServicio(); // Reset form
         },
-        (error: any) => {
-          console.error('Error al actualizar servicio:', error);
-        }
+        error => console.error('Error al actualizar servicio:', error)
       );
     } else {
-      // Crear nuevo servicio
       this.servicioService.createServicio(this.newServicioForm).subscribe(
-        (data: Servicio) => {
-          console.log('Servicio creado:', data);
+        () => {
           this.loadServicios();
           this.showForm = false;
           this.newServicio(); // Reset form
         },
-        (error: any) => {
-          console.error('Error al crear servicio:', error);
-        }
+        error => console.error('Error al crear servicio:', error)
       );
     }
   }
@@ -103,13 +116,8 @@ export class AdminServiciosComponent implements OnInit {
   deleteServicio(id: number): void {
     if (confirm('¿Estás seguro de que quieres eliminar este servicio?')) {
       this.servicioService.deleteServicio(id).subscribe(
-        () => {
-          console.log('Servicio eliminado exitosamente.');
-          this.loadServicios();
-        },
-        (error: any) => {
-          console.error('Error al eliminar servicio:', error);
-        }
+        () => this.loadServicios(),
+        error => console.error('Error al eliminar servicio:', error)
       );
     }
   }

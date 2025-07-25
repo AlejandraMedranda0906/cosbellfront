@@ -4,7 +4,7 @@ import { ServicioService } from '../../../services/servicio.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
-import { Servicio } from '../../../services/servicio.service'; // Importar la interfaz Servicio
+import { Servicio } from '../../../services/servicio.service';
 import { ChatModalComponent } from '../../../valorar-cita/chat-modal.component';
 
 @Component({
@@ -16,10 +16,16 @@ import { ChatModalComponent } from '../../../valorar-cita/chat-modal.component';
 })
 export class AdminAppointmentsComponent implements OnInit {
   appointments: any[] = [];
-  services: Servicio[] = []; // Tipar correctamente
+  services: Servicio[] = [];
   employees: any[] = [];
   clients: any[] = [];
-  filters: { fechaInicio?: string, fechaFin?: string, employeeId?: number, servicioId?: number, userId?: number } = {};
+  filters: {
+    fechaInicio?: string;
+    fechaFin?: string;
+    employeeId?: number;
+    servicioId?: number;
+    userId?: number;
+  } = {};
   showFilters: boolean = false;
   showChatModal = false;
   selectedAppointmentId: number = 0;
@@ -29,7 +35,7 @@ export class AdminAppointmentsComponent implements OnInit {
     private citaService: CitaService,
     private servicioService: ServicioService,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadServices();
@@ -92,30 +98,6 @@ export class AdminAppointmentsComponent implements OnInit {
     this.loadAllAppointments();
   }
 
-  onDateRangeChange(type: 'inicio' | 'fin', event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    if (type === 'inicio') {
-      this.filters.fechaInicio = value;
-    } else {
-      this.filters.fechaFin = value;
-    }
-  }
-
-  onEmployeeChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    this.filters.employeeId = value ? Number(value) : undefined;
-  }
-
-  onServiceChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    this.filters.servicioId = value ? Number(value) : undefined;
-  }
-
-  onClientChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    this.filters.userId = value ? Number(value) : undefined;
-  }
-
   changeAppointmentStatus(appointment: any, newStatus: string): void {
     if (appointment.status === newStatus) return;
     this.citaService.updateAppointmentStatus(appointment.id, newStatus).subscribe({
@@ -136,4 +118,8 @@ export class AdminAppointmentsComponent implements OnInit {
   closeChat() {
     this.showChatModal = false;
   }
-} 
+
+  filtrar(): void {
+    this.loadAllAppointments();
+  }
+}

@@ -1,44 +1,42 @@
 <div class="admin-appointments-container">
   <div class="appointments-header">
     <h2>Todas las Citas Programadas</h2>
-    <button class="admin-button-primary" style="margin-top: -40px;" (click)="showFilters = !showFilters">Filtros</button>
   </div>
 
-  <!-- Filtros -->
-  <div class="filters-section" *ngIf="showFilters">
+  <!-- Filtros SIEMPRE visibles y auto-aplicables -->
+  <div class="filters-section">
     <div class="filters-row">
       <div class="filter-group">
         <label for="filterDateInicio">Fecha inicio:</label>
-        <input type="date" class="form-control" id="filterDateInicio" [(ngModel)]="filters.fechaInicio" (change)="onDateRangeChange('inicio', $event)">
+        <input type="date" class="form-control" id="filterDateInicio" [(ngModel)]="filters.fechaInicio" (ngModelChange)="filtrar()">
       </div>
       <div class="filter-group">
         <label for="filterDateFin">Fecha fin:</label>
-        <input type="date" class="form-control" id="filterDateFin" [(ngModel)]="filters.fechaFin" (change)="onDateRangeChange('fin', $event)">
+        <input type="date" class="form-control" id="filterDateFin" [(ngModel)]="filters.fechaFin" (ngModelChange)="filtrar()">
       </div>
       <div class="filter-group">
         <label for="filterEmployee">Profesional:</label>
-        <select class="form-control" id="filterEmployee" [(ngModel)]="filters.employeeId" (change)="onEmployeeChange($event)">
+        <select class="form-control" id="filterEmployee" [(ngModel)]="filters.employeeId" (ngModelChange)="filtrar()">
           <option [ngValue]="undefined">Todos</option>
           <option *ngFor="let employee of employees" [ngValue]="employee.id">{{ employee.name }}</option>
         </select>
       </div>
       <div class="filter-group">
         <label for="filterService">Servicio:</label>
-        <select class="form-control" id="filterService" [(ngModel)]="filters.servicioId" (change)="onServiceChange($event)">
+        <select class="form-control" id="filterService" [(ngModel)]="filters.servicioId" (ngModelChange)="filtrar()">
           <option [ngValue]="undefined">Todos</option>
           <option *ngFor="let service of services" [ngValue]="service.id">{{ service.name }}</option>
         </select>
       </div>
       <div class="filter-group">
         <label for="filterClient">Cliente:</label>
-        <select class="form-control" id="filterClient" [(ngModel)]="filters.userId" (change)="onClientChange($event)">
+        <select class="form-control" id="filterClient" [(ngModel)]="filters.userId" (ngModelChange)="filtrar()">
           <option [ngValue]="undefined">Todos</option>
           <option *ngFor="let client of clients" [ngValue]="client.id">{{ client.name }}</option>
         </select>
       </div>
     </div>
     <div class="filters-actions">
-      <button class="admin-button-primary" (click)="applyFilters()">Aplicar Filtros</button>
       <button class="admin-button-secondary" (click)="clearFilters()">Limpiar Filtros</button>
     </div>
   </div>
@@ -48,7 +46,7 @@
     <div *ngIf="appointments.length === 0" class="alert alert-info">
       No hay citas programadas para los filtros seleccionados.
     </div>
-    
+
     <div class="appointments-table" *ngIf="appointments.length > 0">
       <div class="table-header">
         <div class="table-cell">Fecha</div>
@@ -59,7 +57,7 @@
         <div class="table-cell">Estado</div>
         <div class="table-cell">Acciones</div>
       </div>
-      
+
       <div class="table-row" *ngFor="let appointment of appointments">
         <div class="table-cell">{{ appointment.fecha | date:'dd/MM/yyyy' }}</div>
         <div class="table-cell">{{ appointment.hora }}</div>
@@ -81,4 +79,4 @@
   </div>
 </div>
 
-<app-chat-modal *ngIf="showChatModal" [appointmentId]="selectedAppointmentId" [currentUserId]="currentUserId" (close)="closeChat()"></app-chat-modal> 
+<app-chat-modal *ngIf="showChatModal" [appointmentId]="selectedAppointmentId" [currentUserId]="currentUserId" (close)="closeChat()"></app-chat-modal>

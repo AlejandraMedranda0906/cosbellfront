@@ -3,14 +3,49 @@
     <h2>Gestión de Servicios</h2>
   </div>
 
+  <!-- FILTROS -->
+  <div class="filters-section">
+    <div class="filters-row">
+      <div class="filter-group">
+        <label for="filtroNombre">Nombre:</label>
+        <input
+          id="filtroNombre"
+          type="text"
+          [(ngModel)]="filtroNombre"
+          class="form-control"
+          placeholder="Escribe un nombre..."
+          (ngModelChange)="filtrar()"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="filtroCategoria">Categoría:</label>
+        <select
+          id="filtroCategoria"
+          [(ngModel)]="filtroCategoriaId"
+          class="form-control"
+          (ngModelChange)="filtrar()"
+        >
+          <option [ngValue]="null">Todas</option>
+          <option *ngFor="let cat of categorias" [ngValue]="cat.id">{{ cat.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filters-actions">
+      <button class="admin-button-secondary" (click)="clearFiltros()">Limpiar Filtros</button>
+    </div>
+  </div>
+
+  <!-- TABLA -->
   <div class="table-section">
     <h3>Servicios Actuales</h3>
-    
-    <div *ngIf="servicios.length === 0" class="alert-info">
+
+    <div *ngIf="serviciosFiltrados.length === 0" class="alert-info">
       No hay servicios disponibles.
     </div>
-    
-    <div class="servicios-table" *ngIf="servicios.length > 0">
+
+    <div class="servicios-table" *ngIf="serviciosFiltrados.length > 0">
       <div class="table-header">
         <div class="table-cell">ID</div>
         <div class="table-cell">Nombre</div>
@@ -19,8 +54,8 @@
         <div class="table-cell">Descripción</div>
         <div class="table-cell">Acciones</div>
       </div>
-      
-      <div class="table-row" *ngFor="let servicio of servicios">
+
+      <div class="table-row" *ngFor="let servicio of serviciosFiltrados">
         <div class="table-cell">{{ servicio.id }}</div>
         <div class="table-cell">{{ servicio.name }}</div>
         <div class="table-cell">{{ servicio.duration }}</div>
@@ -35,23 +70,24 @@
 
     <button *ngIf="!showForm" class="admin-button-primary" (click)="newServicio()" style="margin-top: 24px;">Añadir servicio</button>
 
+    <!-- FORMULARIO -->
     <div class="form-section" *ngIf="showForm" style="margin-top: 32px;">
       <h3>{{ selectedServicio ? 'Editar Servicio' : 'Añadir Nuevo Servicio' }}</h3>
       <form (ngSubmit)="saveServicio()">
         <div class="form-row">
           <div class="form-group">
             <label for="name">Nombre:</label>
-            <input type="text" id="name" [(ngModel)]="newServicioForm.name" name="name" required>
+            <input type="text" id="name" [(ngModel)]="newServicioForm.name" name="name" required />
           </div>
           <div class="form-group">
             <label for="duration">Duración (min):</label>
-            <input type="number" id="duration" [(ngModel)]="newServicioForm.duration" name="duration" required>
+            <input type="number" id="duration" [(ngModel)]="newServicioForm.duration" name="duration" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="price">Precio:</label>
-            <input type="number" id="price" [(ngModel)]="newServicioForm.price" name="price" required step="0.01">
+            <input type="number" id="price" [(ngModel)]="newServicioForm.price" name="price" required step="0.01" />
           </div>
           <div class="form-group">
             <label for="description">Descripción:</label>
@@ -68,7 +104,7 @@
           </div>
           <div class="form-group">
             <label for="imageUrl">Imagen (URL):</label>
-            <input type="text" id="imageUrl" [(ngModel)]="newServicioForm.imageUrl" name="imageUrl" placeholder="https://...">
+            <input type="text" id="imageUrl" [(ngModel)]="newServicioForm.imageUrl" name="imageUrl" placeholder="https://..." />
           </div>
         </div>
         <div class="form-actions">

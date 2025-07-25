@@ -67,31 +67,43 @@ export class AgendarCitaComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const servicioIdFromRoute = params.get('servicioId');
-      const citaIdFromRoute = params.get('citaId');
+ngOnInit() {
+  this.route.paramMap.subscribe(params => {
+    const servicioIdFromRoute = params.get('servicioId');
+    const citaIdFromRoute = params.get('citaId');
 
-      if (citaIdFromRoute) {
-        this.isEditMode = true;
-        this.currentCitaId = Number(citaIdFromRoute);
-        this.cargarDatosCitaParaEdicion(this.currentCitaId);
-      } else if (servicioIdFromRoute) {
-        this.formCita.get('servicioId')?.setValue(servicioIdFromRoute);
-      }
-    });
+    if (citaIdFromRoute) {
+      this.isEditMode = true;
+      this.currentCitaId = Number(citaIdFromRoute);
+      this.cargarDatosCitaParaEdicion(this.currentCitaId);
+    } else if (servicioIdFromRoute) {
+      this.formCita.get('servicioId')?.setValue(servicioIdFromRoute);
+    }
+  });
 
-    this.servicioService.getAllServicios().subscribe((data: any[]) => this.servicios = data);
-    this.userService.getEmployees().subscribe((data: any[]) => this.employees = data);
+  this.servicioService.getAllServicios().subscribe((data: any[]) => this.servicios = data);
+  this.userService.getEmployees().subscribe((data: any[]) => this.employees = data);
 
-    this.formCita.get('servicioId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
-    this.formCita.get('fecha').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
-    this.formCita.get('employeeId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
+  this.formCita.get('servicioId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
+  this.formCita.get('fecha').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
+  this.formCita.get('employeeId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
 
-    // Elimina la lógica que ponía los valores de los @Input aquí
-    // Solo forzar la consulta de horarios disponibles al abrir el modal
-    this.updateAvailableTimes();
-  }
+  this.updateAvailableTimes();
+
+  // NUEVO: Autocompletar campos email y phone
+  this.userService.getCurrentUser().subscribe({
+    next: (user) => {
+      this.formCita.patchValue({
+        email: user.email || '',
+        phone: user.phone || ''
+      });
+    },
+    error: (err) => {
+      console.error('No se pudo obtener el usuario actual:', err);
+    }
+  });
+}
+
 
   ngOnChanges(changes: SimpleChanges) {
     this.formCita.get('fecha')?.setValue(this.preselectedFecha ?? '');

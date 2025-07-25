@@ -1,12 +1,51 @@
 <div class="admin-personal-container">
   <h2>Gestión del Personal</h2>
+
+  <!-- FILTROS -->
+  <div class="filters-section">
+    <div class="filters-row">
+      <div class="filter-group">
+        <label for="filtroNombre">Nombre:</label>
+        <input
+          id="filtroNombre"
+          type="text"
+          [(ngModel)]="filtroNombre"
+          (ngModelChange)="filtrarPersonal()"
+          class="form-control"
+          placeholder="Buscar por nombre..."
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="filtroRol">Rol:</label>
+        <select
+          id="filtroRol"
+          [(ngModel)]="filtroRol"
+          (ngModelChange)="filtrarPersonal()"
+          class="form-control"
+        >
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let rol of rolesDisponibles" [ngValue]="rol">{{ rol }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filters-actions">
+      <button class="admin-button-secondary" (click)="limpiarFiltros()">Limpiar Filtros</button>
+    </div>
+  </div>
+
+  <!-- MENSAJES DE ESTADO -->
   <div *ngIf="loading" class="loading">Cargando personal...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
 
+  <!-- TABLA -->
   <div class="table-section">
     <h3>Personal Actual</h3>
-    <div *ngIf="!loading && personal.length === 0" class="alert-info">No hay personal registrado.</div>
-    <div class="personal-table" *ngIf="!loading && personal.length > 0">
+
+    <div *ngIf="!loading && personalFiltrado.length === 0" class="alert-info">No hay personal registrado.</div>
+
+    <div class="personal-table" *ngIf="!loading && personalFiltrado.length > 0">
       <div class="table-header">
         <div class="table-cell">ID</div>
         <div class="table-cell">Nombre</div>
@@ -15,13 +54,13 @@
         <div class="table-cell">Servicios</div>
         <div class="table-cell">Acciones</div>
       </div>
-      <div class="table-row" *ngFor="let p of personal">
+      <div class="table-row" *ngFor="let p of personalFiltrado">
         <div class="table-cell">{{ p.id }}</div>
         <div class="table-cell">{{ p.name }}</div>
         <div class="table-cell">{{ p.email }}</div>
         <div class="table-cell">{{ p.roleName || p.role || (p.roles?.[0]?.name || '') }}</div>
         <div class="table-cell">
-          <span *ngIf="p.services && p.services.length > 0">
+          <span *ngIf="p.services?.length">
             <span *ngFor="let s of p.services; let last = last">{{ s.name }}<span *ngIf="!last">, </span></span>
           </span>
         </div>
@@ -32,4 +71,4 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
