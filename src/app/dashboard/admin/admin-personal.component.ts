@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
+import { UserService, UserData } from '../../services/user.service';
 
 @Component({
   selector: 'app-admin-personal',
@@ -21,53 +21,88 @@ export class AdminPersonalComponent implements OnInit {
   filtroRol: string | null = null;
   rolesDisponibles: string[] = [];
 
-  constructor(private userService: UserService, private router: Router) {}
+  // Para edición
+  showEditModal = false;
+  usuarioEditando: any = null;
+  editForm: UserData = { email: '', password: '', phone: '' };
+
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadPersonal();
   }
 
-  loadPersonal() {
+  loadPersonal(): void {
     this.loading = true;
     this.userService.getAllPersonal().subscribe({
-      next: (data) => {
+      next: data => {
         this.personal = data;
         this.personalFiltrado = [...data];
-        this.rolesDisponibles = [...new Set(data.map(p => p.roleName || p.role || (p.roles?.[0]?.name || '')))];
+        this.rolesDisponibles = Array.from(
+          new Set(data.map(p => p.roleName || p.role || (p.roles?.[0]?.name || '')))
+        );
         this.loading = false;
       },
-      error: (err) => {
+      error: () => {
         this.error = 'Error al cargar el personal';
         this.loading = false;
       }
     });
   }
 
-  editarPersonal(persona: any) {
-    this.router.navigate(['/dashboard-admin/registrar-profesional'], { state: { user: persona } });
-  }
-
-  eliminarPersonal(id: number) {
-    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
-      this.userService.deleteUser(id).subscribe({
-        next: () => this.loadPersonal(),
-        error: () => alert('Error al eliminar usuario')
-      });
-    }
-  }
-
-  filtrarPersonal() {
+  filtrarPersonal(): void {
+    const term = this.filtroNombre.toLowerCase();
     this.personalFiltrado = this.personal.filter(p => {
-      const nombreMatch = p.name?.toLowerCase().includes(this.filtroNombre.toLowerCase());
+      const nombre = (p.name || '').toLowerCase();
       const rol = p.roleName || p.role || (p.roles?.[0]?.name || '');
-      const rolMatch = !this.filtroRol || rol === this.filtroRol;
-      return nombreMatch && rolMatch;
+      return nombre.includes(term) && (!this.filtroRol || rol === this.filtroRol);
     });
   }
 
-  limpiarFiltros() {
+  limpiarFiltros(): void {
     this.filtroNombre = '';
     this.filtroRol = null;
     this.personalFiltrado = [...this.personal];
+  }
+
+  // ABRE MODAL DE EDICIÓN
+  editarPersonal(persona: any): void {
+    this.usuarioEditando = persona;
+    this.editForm = {
+      email: persona.email || '',
+      password: '', // Por seguridad nunca rellenas el password real
+      phone: persona.phone || ''
+    };
+    this.showEditModal = true;
+  }
+
+  // GUARDA LOS CAMBIOS (PUT)
+  guardarEdicion(): void {
+    if (!this.usuarioEditando) return;
+    this.userService.updateUser(this.usuarioEditando.id, this.editForm).subscribe(
+      () => {
+        this.showEditModal = false;
+        this.usuarioEditando = null;
+        this.loadPersonal();
+      },
+      () => alert('Error al actualizar usuario')
+    );
+  }
+
+  // CANCELA EDICIÓN
+  cancelarEdicion(): void {
+    this.showEditModal = false;
+    this.usuarioEditando = null;
+  }
+
+  eliminarPersonal(id: number): void {
+    if (!confirm('¿Seguro que deseas eliminar este usuario?')) return;
+    this.userService.deleteUser(id).subscribe(
+      () => this.loadPersonal(),
+      () => alert('Error al eliminar usuario')
+    );
   }
 }

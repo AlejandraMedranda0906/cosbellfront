@@ -50,4 +50,9 @@ export class UserService {
   return this.http.get<{ email: string; phone: string }>(`${API_URL}/me`);
 }
 
+updateUser(id: number, userData: UserData): Observable<any> {
+  return this.http.put(`${API_URL}/${id}`, userData);
+}
+
+
 }

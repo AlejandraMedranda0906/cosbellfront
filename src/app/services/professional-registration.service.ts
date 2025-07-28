@@ -27,7 +27,23 @@ export class ProfessionalRegistrationService {
 
   constructor(private http: HttpClient) { }
 
+  /** Crear un profesional */
   registerProfessional(request: ProfessionalRegisterRequest): Observable<any> {
     return this.http.post<any>(`${API_URL}/register`, request);
   }
-} 
+
+  /** Obtener todos los profesionales */
+  getAllEmployees(): Observable<any[]> {
+    return this.http.get<any[]>(API_URL);
+  }
+
+  /** Actualizar un profesional */
+  updateProfessional(id: number, request: ProfessionalRegisterRequest): Observable<any> {
+    return this.http.put<any>(`${API_URL}/${id}`, request);
+  }
+
+  /** Borrar un profesional */
+  deleteProfessional(id: number): Observable<void> {
+    return this.http.delete<void>(`${API_URL}/${id}`);
+  }
+}
