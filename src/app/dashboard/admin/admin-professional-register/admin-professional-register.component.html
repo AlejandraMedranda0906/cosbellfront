@@ -45,6 +45,26 @@
           </div>
         </div>
       </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Celular:</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            required
+            maxlength="10"
+            pattern="^0[0-9]{9}$"
+            placeholder="Ej: 0999999999"
+          >
+          <div *ngIf="professionalForm.get('phone')?.touched && professionalForm.get('phone')?.invalid" class="error-message">
+            <span *ngIf="professionalForm.get('phone')?.errors?.['required']">El teléfono es requerido.</span>
+            <span *ngIf="professionalForm.get('phone')?.errors?.['pattern']">Debe ser un número de 10 dígitos y empezar con 0.</span>
+            <span *ngIf="professionalForm.get('phone')?.errors?.['maxlength']">Máximo 10 dígitos.</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="form-section" *ngIf="professionalForm.get('roleName')?.value === 'EMPLOYEE'">
@@ -59,6 +79,13 @@
 
     <div class="form-section" *ngIf="professionalForm.get('roleName')?.value === 'EMPLOYEE'">
       <h3>Horarios de Disponibilidad</h3>
+      <div class="schedule-actions">
+  <button type="button" class="admin-button-secondary" (click)="aplicarHorarioEstandar()">
+    Usar horario estándar (Lunes a Viernes)
+  </button>
+  <button type="button" class="admin-button-secondary" (click)="addSchedule()">Añadir Horario</button>
+</div>
+
       <div formArrayName="schedules">
         <div *ngFor="let schedule of schedulesFormArray.controls; let i = index" [formGroupName]="i" class="schedule-group">
           <div class="schedule-row">
@@ -97,4 +124,4 @@
       <p *ngIf="mensaje" class="message">{{ mensaje }}</p>
     </div>
   </form>
-</div> 
+</div>

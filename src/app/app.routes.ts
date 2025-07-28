@@ -8,7 +8,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { HomeComponent } from './home/home.component';
 import { AdminPersonalComponent } from './dashboard/admin/admin-personal.component';
-
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent) },
@@ -26,6 +25,8 @@ export const routes: Routes = [
       { path: 'promociones', component: AdminPromotionsComponent, canActivate: [authGuard], data: { roles: ['ADMIN'] } }, // Nueva ruta para promociones
       { path: 'registrar-profesional', component: AdminProfessionalRegisterComponent, canActivate: [authGuard], data: { roles: ['ADMIN'] } },
       { path: 'personal', component: AdminPersonalComponent, canActivate: [authGuard], data: { roles: ['ADMIN'] } },
+      { path: 'estadisticas', loadComponent: () => import('./dashboard/admin/dashboard-stats/dashboard-stats.component').then(m => m.DashboardStatsComponent) }
+
        // Nueva ruta para registrar profesionales
     ]
   },

@@ -25,6 +25,8 @@ export class AgendarCitaComponent implements OnInit, OnChanges {
   @Input() servicios: any[] = [];
   @Output() close = new EventEmitter<void>();
 
+  showSuccessModal: boolean = false;
+
   formCita: any;
   employees: any[] = [];
   mensaje: string = '';
@@ -33,15 +35,14 @@ export class AgendarCitaComponent implements OnInit, OnChanges {
 
   isEditMode: boolean = false;
   currentCitaId: number | null = null;
+  minDate: string = new Date().toISOString().split('T')[0];
 
-  // Validador personalizado para evitar fechas pasadas
   dateNotPastValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const selectedDate = new Date(control.value);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // Resetear horas para comparar solo la fecha
+      const now = new Date();
 
-      if (selectedDate < today) {
+      if (selectedDate.getTime() < now.getTime()) {
         return { 'dateInPast': { value: control.value } };
       }
       return null;
@@ -67,50 +68,48 @@ export class AgendarCitaComponent implements OnInit, OnChanges {
     });
   }
 
-ngOnInit() {
-  this.route.paramMap.subscribe(params => {
-    const servicioIdFromRoute = params.get('servicioId');
-    const citaIdFromRoute = params.get('citaId');
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const servicioIdFromRoute = params.get('servicioId');
+      const citaIdFromRoute = params.get('citaId');
 
-    if (citaIdFromRoute) {
-      this.isEditMode = true;
-      this.currentCitaId = Number(citaIdFromRoute);
-      this.cargarDatosCitaParaEdicion(this.currentCitaId);
-    } else if (servicioIdFromRoute) {
-      this.formCita.get('servicioId')?.setValue(servicioIdFromRoute);
-    }
-  });
+      if (citaIdFromRoute) {
+        this.isEditMode = true;
+        this.currentCitaId = Number(citaIdFromRoute);
+        this.cargarDatosCitaParaEdicion(this.currentCitaId);
+      } else if (servicioIdFromRoute) {
+        this.formCita.get('servicioId')?.setValue(servicioIdFromRoute);
+      }
+    });
 
-  this.servicioService.getAllServicios().subscribe((data: any[]) => this.servicios = data);
-  this.userService.getEmployees().subscribe((data: any[]) => this.employees = data);
+    this.servicioService.getAllServicios().subscribe((data: any[]) => this.servicios = data);
+    this.userService.getEmployees().subscribe((data: any[]) => this.employees = data);
 
-  this.formCita.get('servicioId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
-  this.formCita.get('fecha').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
-  this.formCita.get('employeeId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
+    this.formCita.get('servicioId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
+    this.formCita.get('fecha').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
+    this.formCita.get('employeeId').valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.updateAvailableTimes());
 
-  this.updateAvailableTimes();
+    this.updateAvailableTimes();
 
-  // NUEVO: Autocompletar campos email y phone
-  this.userService.getCurrentUser().subscribe({
-    next: (user) => {
-      this.formCita.patchValue({
-        email: user.email || '',
-        phone: user.phone || ''
-      });
-    },
-    error: (err) => {
-      console.error('No se pudo obtener el usuario actual:', err);
-    }
-  });
-}
-
+    // Autocompletar email y phone
+    this.userService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.formCita.patchValue({
+          email: user.email || '',
+          phone: user.phone || ''
+        });
+      },
+      error: (err) => {
+        console.error('No se pudo obtener el usuario actual:', err);
+      }
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     this.formCita.get('fecha')?.setValue(this.preselectedFecha ?? '');
     this.formCita.get('employeeId')?.setValue(this.preselectedEmployeeId ?? '');
     this.formCita.get('servicioId')?.setValue(this.preselectedServicioId ?? '');
     this.updateAvailableTimes();
-    // Elimina el setTimeout aquí
     console.log('[AgendarCitaComponent] preselectedHora:', this.preselectedHora, 'form hora:', this.formCita.get('hora')?.value);
   }
 
@@ -183,9 +182,14 @@ ngOnInit() {
     if (this.formCita.invalid) return;
 
     const formValue = this.formCita.value;
+    const userId = this.authService.getUserId();
+    if (userId === null) {
+      this.mensaje = 'Error: Debes iniciar sesión para agendar o modificar una cita.';
+      return;
+    }
     const data = {
       servicioId: Number(formValue.servicioId),
-      userId: this.authService.getUserId(),
+      userId: userId, // aquí seguro es number, nunca null
       fecha: formValue.fecha as string,
       hora: formValue.hora as string,
       email: formValue.email as string,
@@ -193,45 +197,23 @@ ngOnInit() {
       employeeId: Number(formValue.employeeId)
     };
 
-    if (data.userId === null) {
-      this.mensaje = 'Error: Debes iniciar sesión para agendar o modificar una cita.';
-      return;
-    }
-
-    console.log('Datos a enviar para agendar/modificar cita:', data);
-
     if (this.isEditMode && this.currentCitaId !== null) {
-      this.citaService.updateCita(this.currentCitaId, {
-        servicioId: data.servicioId,
-        userId: data.userId!,
-        fecha: data.fecha,
-        hora: data.hora,
-        email: data.email,
-        phone: data.phone,
-        employeeId: data.employeeId
-      }).subscribe({
+      this.citaService.updateCita(this.currentCitaId, { ...data }).subscribe({
         next: (res: any) => {
           this.mensaje = 'Cita modificada correctamente';
+          this.showSuccessModal = true;
         },
         error: (err: any) => this.mensaje = err.error?.message || 'Error al modificar cita'
       });
     } else {
-      this.citaService.agendarCita({
-        servicioId: data.servicioId,
-        userId: data.userId!,
-        fecha: data.fecha,
-        hora: data.hora,
-        email: data.email,
-        phone: data.phone,
-        employeeId: data.employeeId
-      }).subscribe({
+      this.citaService.agendarCita({ ...data }).subscribe({
         next: (res: any) => {
-        this.mensaje = 'Cita agendada correctamente';
-        this.formCita.reset();
-        this.close.emit();
-      },
+          this.mensaje = 'Cita agendada correctamente';
+          this.formCita.reset();
+          this.showSuccessModal = true;
+        },
         error: (err: any) => this.mensaje = err.error?.message || 'Error al agendar'
-    });
+      });
     }
   }
 

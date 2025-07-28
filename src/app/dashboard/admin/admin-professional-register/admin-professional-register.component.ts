@@ -30,6 +30,11 @@ export class AdminProfessionalRegisterComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      phone: ['', [
+        Validators.required,
+        Validators.pattern('^0[0-9]{9}$'),
+        Validators.maxLength(10)
+      ]], // Solo acepta 10 dígitos y empieza con 0
       roleName: ['EMPLOYEE', Validators.required],
       serviceIds: this.fb.array([]),
       schedules: this.fb.array([])
@@ -42,15 +47,13 @@ export class AdminProfessionalRegisterComponent implements OnInit {
       this.professionalForm.patchValue({
         name: user.name || '',
         email: user.email || '',
+        phone: user.phone || '',
         roleName: user.roleName || user.role || (user.roles?.[0]?.name || 'EMPLOYEE'),
-        // No se precarga password por seguridad
       });
-      // Precargar servicios si existen
       if (user.services && Array.isArray(user.services)) {
         const ids = user.services.map((s: any) => s.id);
         this.professionalForm.setControl('serviceIds', this.fb.array(ids));
       }
-      // Precargar horarios si existen
       if (user.schedules && Array.isArray(user.schedules)) {
         const schedulesArray = new FormArray<FormGroup>([]);
         user.schedules.forEach((h: any) => {
@@ -62,7 +65,6 @@ export class AdminProfessionalRegisterComponent implements OnInit {
         });
         this.professionalForm.setControl('schedules', schedulesArray);
       } else if (user.horarios && Array.isArray(user.horarios)) {
-        // Alternativamente, si la propiedad se llama 'horarios'
         const schedulesArray = new FormArray<FormGroup>([]);
         user.horarios.forEach((h: any) => {
           schedulesArray.push(this.fb.group({
@@ -75,7 +77,6 @@ export class AdminProfessionalRegisterComponent implements OnInit {
       }
     }
 
-    // Escuchar cambios en el rol para actualizar validaciones
     this.professionalForm.get('roleName')?.valueChanges.subscribe(role => {
       this.updateValidationForRole(role);
     });
@@ -84,14 +85,12 @@ export class AdminProfessionalRegisterComponent implements OnInit {
   ngOnInit(): void {
     this.loadServicios();
     this.loadRoles();
-    this.addSchedule(); // Add an initial schedule input
+    this.addSchedule();
   }
 
   updateValidationForRole(role: string): void {
     const schedulesArray = this.schedulesFormArray;
-    
     if (role === 'ADMIN') {
-      // Para administradores, remover validadores de horarios
       schedulesArray.controls.forEach(control => {
         control.get('dia')?.clearValidators();
         control.get('horaInicio')?.clearValidators();
@@ -101,7 +100,6 @@ export class AdminProfessionalRegisterComponent implements OnInit {
         control.get('horaFin')?.updateValueAndValidity();
       });
     } else {
-      // Para empleados, añadir validadores de horarios
       schedulesArray.controls.forEach(control => {
         control.get('dia')?.setValidators(Validators.required);
         control.get('horaInicio')?.setValidators(Validators.required);
@@ -156,7 +154,6 @@ export class AdminProfessionalRegisterComponent implements OnInit {
   addSchedule(): void {
     const role = this.professionalForm.get('roleName')?.value;
     const isRequired = role === 'EMPLOYEE';
-    
     this.schedulesFormArray.push(this.fb.group({
       dia: ['', isRequired ? Validators.required : []],
       horaInicio: ['', isRequired ? Validators.required : []],
@@ -170,20 +167,20 @@ export class AdminProfessionalRegisterComponent implements OnInit {
 
   isFormValid(): boolean {
     const role = this.professionalForm.get('roleName')?.value;
-    const basicFieldsValid = !!(this.professionalForm.get('name')?.valid && 
-                           this.professionalForm.get('email')?.valid && 
-                           this.professionalForm.get('password')?.valid && 
-                           this.professionalForm.get('roleName')?.valid);
-    
+    const basicFieldsValid = !!(
+      this.professionalForm.get('name')?.valid &&
+      this.professionalForm.get('email')?.valid &&
+      this.professionalForm.get('password')?.valid &&
+      this.professionalForm.get('phone')?.valid &&
+      this.professionalForm.get('roleName')?.valid
+    );
     if (role === 'ADMIN') {
-      // Para administradores, solo validar campos básicos
       return basicFieldsValid;
     } else {
-      // Para empleados, validar también horarios
-      const schedulesValid = this.schedulesFormArray.controls.every(control => 
-        !!(control.get('dia')?.valid && 
-        control.get('horaInicio')?.valid && 
-        control.get('horaFin')?.valid)
+      const schedulesValid = this.schedulesFormArray.controls.every(control =>
+        !!(control.get('dia')?.valid &&
+          control.get('horaInicio')?.valid &&
+          control.get('horaFin')?.valid)
       );
       return basicFieldsValid && schedulesValid;
     }
@@ -196,8 +193,6 @@ export class AdminProfessionalRegisterComponent implements OnInit {
     }
 
     const requestData = this.professionalForm.value;
-    console.log('Datos a enviar:', requestData);
-
     this.professionalRegistrationService.registerProfessional(requestData).subscribe(
       (response: any) => {
         this.mensaje = response.message || 'Profesional registrado exitosamente!';
@@ -207,14 +202,28 @@ export class AdminProfessionalRegisterComponent implements OnInit {
         this.addSchedule();
       },
       (error: any) => {
-        console.error('Error al registrar profesional:', error);
         this.mensaje = error.error?.message || 'Error al registrar profesional. Intente de nuevo.';
       }
     );
   }
 
-  // Para marcar los checkboxes de servicios correctamente
   isServiceChecked(serviceId: number): boolean {
     return this.serviceIdsFormArray.value.includes(serviceId);
   }
-} 
+
+  aplicarHorarioEstandar() {
+    // Borra todos los horarios anteriores
+    while (this.schedulesFormArray.length > 0) {
+      this.schedulesFormArray.removeAt(0);
+    }
+    const dias = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
+    dias.forEach(dia => {
+      this.schedulesFormArray.push(this.fb.group({
+        dia: [dia, Validators.required],
+        horaInicio: ['09:00', Validators.required],
+        horaFin: ['18:00', Validators.required]
+      }));
+    });
+  }
+
+}

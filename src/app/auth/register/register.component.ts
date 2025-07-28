@@ -26,7 +26,11 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
     name: ['', [Validators.required, Validators.minLength(5)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
-    phone: [''],
+    phone: ['', [
+      Validators.required,
+      Validators.pattern(/^0[0-9]{9}$/),
+      Validators.maxLength(10)
+    ]],
     role: ['CLIENT'],
     termsAccepted: [false, [Validators.requiredTrue]]
   });
@@ -136,7 +140,5 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    // Nada que limpiar, ya que no hay intervalos o timeouts
-  }
+  ngOnDestroy() {}
 }

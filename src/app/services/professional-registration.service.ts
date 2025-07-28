@@ -14,6 +14,7 @@ export interface ProfessionalRegisterRequest {
   name: string;
   email: string;
   password: string;
+  phone: string; 
   roleName: string; // e.g., "EMPLOYEE" or "ADMIN"
   serviceIds: number[];
   schedules: HorarioRequest[];

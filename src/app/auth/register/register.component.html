@@ -74,7 +74,32 @@
             </div>
           </div>
 
-          
+          <!-- Teléfono -->
+<div class="form-group">
+  <label for="phone">Teléfono:</label>
+  <input
+    type="tel"
+    class="form-control"
+    id="phone"
+    formControlName="phone"
+    required
+    maxlength="10"
+    pattern="^0[0-9]{9}$"
+    placeholder="Ej: 0999999999"
+    [class.is-invalid]="formRegister.get('phone')?.invalid && formRegister.get('phone')?.touched"
+    autocomplete="off"
+  >
+  <div class="invalid-feedback" *ngIf="formRegister.get('phone')?.hasError('required') && formRegister.get('phone')?.touched">
+    El teléfono es requerido
+  </div>
+  <div class="invalid-feedback" *ngIf="formRegister.get('phone')?.hasError('pattern') && formRegister.get('phone')?.touched">
+    Debe ser un número de 10 dígitos y empezar con 0
+  </div>
+  <div class="invalid-feedback" *ngIf="formRegister.get('phone')?.hasError('maxlength') && formRegister.get('phone')?.touched">
+    Máximo 10 dígitos
+  </div>
+</div>
+
           <!-- Términos -->
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="termsCheck" formControlName="termsAccepted">

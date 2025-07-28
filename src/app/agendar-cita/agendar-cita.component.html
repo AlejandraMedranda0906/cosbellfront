@@ -1,6 +1,19 @@
 <div class="agendar-cita-container">
   <h2>Agendar Cita</h2>
-  <div *ngIf="mensaje" class="alert-cosbell" [ngClass]="{'alert-cosbell-error': mensaje.includes('Error')}" style="margin-top:10px;">{{ mensaje }}</div>
+  
+  <!-- Modal de Éxito -->
+  <div *ngIf="showSuccessModal" class="modal-backdrop">
+    <div class="modal-content">
+      <h3>¡Cita agendada!</h3>
+      <p>Tu cita fue registrada exitosamente.</p>
+      <button type="button" (click)="showSuccessModal = false">Cerrar</button>
+    </div>
+  </div>
+
+  <div *ngIf="mensaje" class="alert-cosbell" [ngClass]="{'alert-cosbell-error': mensaje.includes('Error')}" style="margin-top:10px;">
+    {{ mensaje }}
+  </div>
+  
   <form [formGroup]="formCita" (ngSubmit)="agendarCita()" class="agendar-cita-form">
     <div class="form-group">
       <label for="servicio">Servicio:</label>
@@ -25,7 +38,7 @@
     
     <div class="form-group">
       <label for="fecha">Fecha:</label>
-      <input id="fecha" type="date" formControlName="fecha" required class="form-control">
+      <input id="fecha" type="date" formControlName="fecha" required class="form-control" [min]="minDate">
       <div *ngIf="formCita.get('fecha')?.touched && formCita.get('fecha')?.invalid" class="alert-cosbell-error">
         <span *ngIf="formCita.get('fecha')?.errors?.required">Selecciona una fecha.</span>
         <span *ngIf="formCita.get('fecha')?.errors?.dateInPast">La fecha no puede ser pasada.</span>
@@ -59,10 +72,8 @@
       </div>
     </div>
 
-
     <div class="btn-container">
       <button type="submit" [disabled]="formCita.invalid" class="cosbell-button-form">Agendar</button>
     </div>
   </form>
-
 </div>

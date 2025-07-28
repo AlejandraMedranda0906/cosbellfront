@@ -1,0 +1,97 @@
+<!-- Filtro -->
+<div class="filter-container">
+  <label for="periodo">Filtrar por:</label>
+  <select id="periodo" [(ngModel)]="selectedPeriod" (change)="loadStatistics()" class="form-control">
+    <option value="day">Día</option>
+    <option value="week">Semana</option>
+    <option value="month">Mes</option>
+    <option value="all">Todos los tiempos</option>
+  </select>
+</div>
+
+<!-- Tarjetas resumen -->
+<div class="stats-container" *ngIf="!loading && stats">
+  <!-- Card empleado destacado: abre modal de empleados -->
+  <div class="card clickable" (click)="openDetailModal('employee')">
+    👨‍💼 Empleado destacado: <strong>{{ stats.topEmployee }}</strong>
+  </div>
+  <!-- Card servicio destacado: abre modal de servicios -->
+  <div class="card clickable" (click)="openDetailModal('service')">
+    🛠️ Servicio más requerido: <strong>{{ stats.topService }}</strong>
+  </div>
+  <div class="card">💰 Ventas: <strong>${{ stats.totalRevenue }}</strong></div>
+  <div class="card">📆 Citas: <strong>{{ stats.totalAppointments }}</strong></div>
+</div>
+
+<!-- Gráfico de servicios -->
+<div class="charts-container" *ngIf="!loading && chartData?.datasets?.[0]?.data?.length">
+  <div class="chart-box">
+    <h4>Distribución de Citas por Servicio</h4>
+    <canvas
+      baseChart
+      [data]="chartData"
+      [type]="'doughnut'"
+      [options]="chartOptions">
+    </canvas>
+  </div>
+</div>
+
+<!-- Gráfico de empleados -->
+<div class="charts-container" *ngIf="!loading && employeeChartData?.datasets?.[0]?.data?.length">
+  <div class="chart-box">
+    <h4>Comparativa de Citas por Empleado</h4>
+    <canvas
+      baseChart
+      [data]="employeeChartData"
+      [type]="'doughnut'"
+      [options]="chartOptions">
+    </canvas>
+  </div>
+</div>
+
+<div *ngIf="loading">Cargando estadísticas...</div>
+<div *ngIf="error" class="alert-cosbell-error">{{ error }}</div>
+
+<!-- MODAL DETALLE (solo si hay datos) -->
+<div class="modal-cosbell-backdrop" *ngIf="selectedDetail">
+  <div class="modal-cosbell">
+    <div class="modal-cosbell-header">
+      <h3>{{ modalTitle }}</h3>
+      <button class="modal-cosbell-close" (click)="closeModal()" aria-label="Cerrar">&times;</button>
+    </div>
+    <div class="modal-cosbell-body">
+      <div *ngIf="modalTitle === 'Detalle de Empleados'">
+        <table>
+          <thead>
+            <tr>
+              <th>Empleado</th>
+              <th>Cantidad de Citas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of selectedDetail">
+              <td>{{ emp.name }}</td>
+              <td>{{ emp.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="modalTitle === 'Detalle de Servicios'">
+        <table>
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th>Cantidad de Citas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let serv of selectedDetail">
+              <td>{{ serv.name }}</td>
+              <td>{{ serv.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

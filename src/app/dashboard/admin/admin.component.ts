@@ -3,11 +3,16 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ChatModalComponent } from '../../valorar-cita/chat-modal.component';
 import { UserService } from '../../services/user.service';
+import { DashboardStatsComponent } from './dashboard-stats/dashboard-stats.component'; // 👈 Importar el componente
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    DashboardStatsComponent // 👈 Importar aquí también
+  ],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
@@ -18,10 +23,9 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    // Lógica de inicialización si es necesaria para el componente Admin (contenedor)
     this.currentUserId = this.userService.getCurrentUserId();
   }
 
