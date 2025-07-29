@@ -15,7 +15,6 @@
           placeholder="Buscar por nombre..."
         />
       </div>
-
       <div class="filter-group">
         <label for="filtroRol">Rol:</label>
         <select
@@ -29,7 +28,6 @@
         </select>
       </div>
     </div>
-
     <div class="filters-actions">
       <button class="admin-button-secondary" (click)="limpiarFiltros()">Limpiar Filtros</button>
     </div>
@@ -43,7 +41,9 @@
   <div class="table-section" *ngIf="!loading">
     <h3>Personal Actual</h3>
 
-    <div *ngIf="personalFiltrado.length === 0" class="alert-info">No hay personal registrado.</div>
+    <div *ngIf="personalFiltrado.length === 0" class="alert-info">
+      No hay personal registrado.
+    </div>
 
     <div class="personal-table" *ngIf="personalFiltrado.length > 0">
       <div class="table-header">
@@ -54,11 +54,12 @@
         <div class="table-cell">Servicios</div>
         <div class="table-cell">Acciones</div>
       </div>
+
       <div class="table-row" *ngFor="let p of personalFiltrado">
         <div class="table-cell">{{ p.id }}</div>
         <div class="table-cell">{{ p.name }}</div>
         <div class="table-cell">{{ p.email }}</div>
-        <div class="table-cell">{{ p.roleName || p.role || (p.roles?.[0]?.name || '') }}</div>
+        <div class="table-cell">{{ p.roleName || p.roles?.[0]?.name || '—' }}</div>
         <div class="table-cell">
           <ng-container *ngIf="p.services?.length; else noServices">
             <span *ngFor="let s of p.services; let last = last">
@@ -76,25 +77,41 @@
   </div>
 
   <!-- MODAL DE EDICIÓN -->
-  <div class="modal" *ngIf="showEditModal">
-    <div class="modal-content">
+  <div class="simple-modal-overlay" *ngIf="showEditModal">
+    <div class="simple-modal">
       <h3>Editar Usuario</h3>
       <form (ngSubmit)="guardarEdicion()">
-        <div class="form-group">
-          <label>Email:</label>
-          <input [(ngModel)]="editForm.email" name="email" required class="form-control" />
-        </div>
-        <div class="form-group">
-          <label>Teléfono:</label>
-          <input [(ngModel)]="editForm.phone" name="phone" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label>Contraseña:</label>
-          <input [(ngModel)]="editForm.password" name="password" type="password" class="form-control" placeholder="Nueva contraseña (opcional)" />
-        </div>
-        <div class="modal-actions">
+        <label for="editEmail">Email:</label>
+        <input
+          id="editEmail"
+          name="email"
+          type="email"
+          [(ngModel)]="editForm.email"
+          required
+        />
+
+        <label for="editPhone">Teléfono:</label>
+        <input
+          id="editPhone"
+          name="phone"
+          type="text"
+          [(ngModel)]="editForm.phone"
+        />
+
+        <label for="editPassword">Contraseña:</label>
+        <input
+          id="editPassword"
+          name="password"
+          type="password"
+          [(ngModel)]="editForm.password"
+          placeholder="(opcional)"
+        />
+
+        <div class="modal-buttons">
           <button type="submit" class="admin-button-primary">Guardar</button>
-          <button type="button" class="admin-button-secondary" (click)="cancelarEdicion()">Cancelar</button>
+          <button type="button" class="admin-button-secondary" (click)="cancelarEdicion()">
+            Cancelar
+          </button>
         </div>
       </form>
     </div>

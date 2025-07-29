@@ -226,3 +226,142 @@
   max-height: 50px;
   overflow: hidden;
 }
+/* Backdrop */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor del modal */
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+/* Header del modal */
+.modal-header {
+  background: #6c3483;
+  color: #fff;
+  padding: 12px 16px;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+  padding: 16px;
+}
+
+/* Grupos de formulario */
+.modal-body .form-group {
+  margin-bottom: 12px;
+}
+
+/* Acciones (botones) */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #f1f1f1;
+}
+
+.admin-button-primary {
+  background-color: #e75480;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.admin-button-secondary {
+  background-color: #666;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* Overlay semitransparente */
+.simple-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Caja del modal */
+.simple-modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Etiquetas arriba de cada input */
+.simple-modal label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* Inputs del formulario */
+.simple-modal input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Botones dentro del modal */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+/* Aseguramos que los <label> dentro del modal tengan color y espacio */
+.simple-modal label,
+.simple-modal-overlay .simple-modal label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;       /* texto oscuro */
+  font-size: 0.95em;
+}
+
+/* Un poco de espacio entre la cabecera y los inputs */
+.simple-modal h3 {
+  margin-bottom: 12px;
+  font-size: 1.3em;
+  color: #222;
+}
+
+/* Inputs con placeholder claro */
+.simple-modal input::placeholder {
+  color: #999;
+}
+
+/* Ajuste de padding en los inputs para que no queden pegados */
+.simple-modal input {
+  margin-bottom: 12px;
+}
