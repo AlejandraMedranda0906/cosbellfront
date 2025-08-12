@@ -9,6 +9,13 @@ export interface UserData {
   phone?: string;
 }
 
+export interface UserDetails {
+  id: number;
+  name: string;
+  email?: string;
+  phone?: string;
+
+}
 
 const API_URL = '/api/users';
 
@@ -54,5 +61,7 @@ updateUser(id: number, userData: UserData): Observable<any> {
   return this.http.put(`${API_URL}/${id}`, userData);
 }
 
-
+getById(id: number) {
+  return this.http.get<UserDetails>(`${API_URL}/${id}`);
+}
 }

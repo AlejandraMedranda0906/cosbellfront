@@ -265,3 +265,38 @@
   .table-cell:last-child { border-bottom: none; }
 }
 
+:root{
+  --primary:#6b1e5b;
+  --chip-bg: rgba(107,30,91,.10);
+  --chip-bg-hover: rgba(107,30,91,.16);
+  --chip-border: rgba(107,30,91,.28);
+}
+
+/* Pastilla para el nombre del cliente */
+.table-cell .link-like{
+  appearance:none;
+  background:var(--chip-bg);
+  border:1px solid var(--chip-border);
+  color:var(--primary);
+  padding:4px 10px;
+  margin:0;
+  border-radius:9999px;
+  font:inherit;
+  font-weight:600;
+  cursor:pointer;
+  line-height:1;
+  text-decoration:none;
+  transition: background .15s ease, transform .1s ease, box-shadow .15s ease;
+}
+
+.table-cell .link-like:hover{
+  background:var(--chip-bg-hover);
+  transform:translateY(-1px);
+}
+
+.table-cell .link-like:active{ transform:translateY(0); opacity:.95; }
+
+.table-cell .link-like:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 2px #fff, 0 0 0 4px var(--primary);
+}

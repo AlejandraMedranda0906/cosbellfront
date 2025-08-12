@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <!-- Filtros: ahora colapsables -->
+  <!-- Filtros -->
   <div class="filters-section" *ngIf="showFilters">
     <div class="filters-row">
       <div class="filter-group">
@@ -96,7 +96,14 @@
       <div class="table-row" *ngFor="let appointment of appointments">
         <div class="table-cell">{{ appointment.fecha | date:'dd/MM/yyyy' }}</div>
         <div class="table-cell">{{ appointment.hora }}</div>
-        <div class="table-cell">{{ appointment.userName }}</div>
+
+        <!-- Cliente clicable para abrir modal -->
+        <div class="table-cell">
+          <button class="link-like" (click)="openClientInfo(appointment)">
+            {{ appointment.userName }}
+          </button>
+        </div>
+
         <div class="table-cell">{{ appointment.serviceName }}</div>
         <div class="table-cell">{{ appointment.employeeName }}</div>
         <div class="table-cell">
@@ -115,7 +122,17 @@
   </div>
 </div>
 
+<!-- Chat -->
 <app-chat-modal *ngIf="showChatModal"
   [appointmentId]="selectedAppointmentId"
   [currentUserId]="currentUserId"
-  (close)="closeChat()"></app-chat-modal>
+  (close)="closeChat()">
+</app-chat-modal>
+
+<!-- Modal de información de cliente -->
+<app-client-info-modal *ngIf="showClientModal && selectedClientId"
+  [userId]="selectedClientId!"
+  [userNameFallback]="selectedClientName"
+  [contact]="selectedClientContact"
+  (close)="closeClientInfo()">
+</app-client-info-modal>

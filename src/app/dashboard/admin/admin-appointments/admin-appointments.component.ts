@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { CitaService } from '../../../services/cita.service';
-import { ServicioService } from '../../../services/servicio.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { CitaService } from '../../../services/cita.service';
+import { ServicioService, Servicio } from '../../../services/servicio.service';
 import { UserService } from '../../../services/user.service';
-import { Servicio } from '../../../services/servicio.service';
+
 import { ChatModalComponent } from '../../../valorar-cita/chat-modal.component';
+// ⬇️ AJUSTA la ruta del modal según tu estructura
+import { ClientInfoModalComponent } from './client-modal.component';
 
 @Component({
   selector: 'app-admin-appointments',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe, ChatModalComponent],
+  imports: [CommonModule, FormsModule, DatePipe, ChatModalComponent, ClientInfoModalComponent],
   templateUrl: './admin-appointments.component.html',
   styleUrls: ['./admin-appointments.component.css']
 })
@@ -33,6 +36,11 @@ export class AdminAppointmentsComponent implements OnInit {
   showChatModal = false;
   selectedAppointmentId: number = 0;
   currentUserId: number = 0;
+
+  // Modal cliente
+  showClientModal = false;
+  selectedClientId: number | null = null;
+  selectedClientName?: string;
 
   // Autocomplete Cliente
   clientQuery: string = '';
@@ -110,7 +118,7 @@ export class AdminAppointmentsComponent implements OnInit {
 
   mostrarTodo(): void {
     this.clearFilters();
-    this.showFilters = false; // si quieres que también se oculte el panel
+    this.showFilters = false;
   }
 
   // ====== AUTOCOMPLETE CLIENTE ======
@@ -179,4 +187,44 @@ export class AdminAppointmentsComponent implements OnInit {
   closeChat(): void {
     this.showChatModal = false;
   }
+
+  // estado nuevo
+selectedClientContact: any | null = null;
+
+openClientInfo(appt: any): void {
+  // Ideal: que venga userId en la cita
+  let id = appt.userId ?? appt.user?.id;
+
+  // Fallback por nombre
+  let contact = this.clients.find((c: any) => (c.name || c.fullName) === appt.userName);
+
+  if (!id && contact?.id) id = contact.id;
+
+  if (!id && !contact) {
+    console.warn('No pude identificar al cliente (faltan id o match por nombre).');
+    return;
+  }
+
+  this.selectedClientId = id || contact.id;
+  // normaliza objeto a {id,name,email,phone,...}
+  this.selectedClientContact = contact ? {
+    id: contact.id,
+    name: contact.name || contact.fullName,
+    email: contact.email,
+    phone: contact.phone || contact.celular,
+    document: contact.document || contact.dni,
+    createdAt: contact.createdAt
+  } : null;
+
+  this.selectedClientName = this.selectedClientContact?.name || appt.userName;
+  this.showClientModal = true;
+}
+
+closeClientInfo(): void {
+  this.showClientModal = false;
+  this.selectedClientId = 0 as any;
+  this.selectedClientName = undefined;
+  this.selectedClientContact = null;
+}
+
 }
