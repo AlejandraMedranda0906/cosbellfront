@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HtpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +12,7 @@ import { NavbarComponent } from './navbar.component';
   declarations: [
     AppComponent,
     FooterComponent,
-    WhatsAppFloatComponent, // <-- agrega la coma aquí
+    WhatsAppFloatComponent, 
     NavbarComponent,
     HttpClient
   ],

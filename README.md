@@ -88,9 +88,11 @@ requerimientos necesitaban ser corregidos y otros debían ser añadidos para gar
 
 ## Resultados
 
-- 
-- 
--  
+- <img src="tabla0" alt="Resultados" width="800">
+
+- <img src="tabla00" alt="Resultados" width="800">
+
+
 
 
 
