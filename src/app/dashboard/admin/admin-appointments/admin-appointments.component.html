@@ -1,41 +1,76 @@
 <div class="admin-appointments-container">
   <div class="appointments-header">
     <h2>Todas las Citas Programadas</h2>
+
+    <div class="header-actions">
+      <button class="admin-button" (click)="toggleFilters()">
+        {{ showFilters ? 'Ocultar filtros' : 'Mostrar filtros' }}
+      </button>
+      <button class="admin-button-secondary" (click)="mostrarTodo()">
+        Mostrar todo
+      </button>
+    </div>
   </div>
 
-  <!-- Filtros SIEMPRE visibles y auto-aplicables -->
-  <div class="filters-section">
+  <!-- Filtros: ahora colapsables -->
+  <div class="filters-section" *ngIf="showFilters">
     <div class="filters-row">
       <div class="filter-group">
         <label for="filterDateInicio">Fecha inicio:</label>
-        <input type="date" class="form-control" id="filterDateInicio" [(ngModel)]="filters.fechaInicio" (ngModelChange)="filtrar()">
+        <input type="date" class="form-control" id="filterDateInicio"
+               [(ngModel)]="filters.fechaInicio" (ngModelChange)="filtrar()">
       </div>
       <div class="filter-group">
         <label for="filterDateFin">Fecha fin:</label>
-        <input type="date" class="form-control" id="filterDateFin" [(ngModel)]="filters.fechaFin" (ngModelChange)="filtrar()">
+        <input type="date" class="form-control" id="filterDateFin"
+               [(ngModel)]="filters.fechaFin" (ngModelChange)="filtrar()">
       </div>
       <div class="filter-group">
         <label for="filterEmployee">Profesional:</label>
-        <select class="form-control" id="filterEmployee" [(ngModel)]="filters.employeeId" (ngModelChange)="filtrar()">
+        <select class="form-control" id="filterEmployee"
+                [(ngModel)]="filters.employeeId" (ngModelChange)="filtrar()">
           <option [ngValue]="undefined">Todos</option>
-          <option *ngFor="let employee of employees" [ngValue]="employee.id">{{ employee.name }}</option>
+          <option *ngFor="let employee of employees" [ngValue]="employee.id">
+            {{ employee.name }}
+          </option>
         </select>
       </div>
       <div class="filter-group">
         <label for="filterService">Servicio:</label>
-        <select class="form-control" id="filterService" [(ngModel)]="filters.servicioId" (ngModelChange)="filtrar()">
+        <select class="form-control" id="filterService"
+                [(ngModel)]="filters.servicioId" (ngModelChange)="filtrar()">
           <option [ngValue]="undefined">Todos</option>
-          <option *ngFor="let service of services" [ngValue]="service.id">{{ service.name }}</option>
+          <option *ngFor="let service of services" [ngValue]="service.id">
+            {{ service.name }}
+          </option>
         </select>
       </div>
-      <div class="filter-group">
-        <label for="filterClient">Cliente:</label>
-        <select class="form-control" id="filterClient" [(ngModel)]="filters.userId" (ngModelChange)="filtrar()">
-          <option [ngValue]="undefined">Todos</option>
-          <option *ngFor="let client of clients" [ngValue]="client.id">{{ client.name }}</option>
-        </select>
+
+      <!-- Cliente: buscador con sugerencias -->
+      <div class="filter-group client-autocomplete" (keydown.escape)="closeClientSuggestions()">
+        <label for="filterClientSearch">Cliente:</label>
+        <input id="filterClientSearch"
+               class="form-control"
+               type="text"
+               placeholder="Buscar cliente…"
+               [(ngModel)]="clientQuery"
+               (input)="onClientInput()"
+               (focus)="onClientInput()"
+               (blur)="onClientBlur()"
+               (keyup.enter)="selectFirstClientSuggestion()">
+        <ul class="suggestions" *ngIf="showClientSuggestions && filteredClients.length > 0">
+          <li *ngFor="let c of filteredClients; let i = index"
+              (mousedown)="selectClient(c)"
+              [class.active]="i === activeClientIndex">
+            {{ c.name }}
+          </li>
+        </ul>
+        <button *ngIf="filters.userId" class="clear-chip" type="button" (click)="clearClientFilter()">
+          Quitar cliente
+        </button>
       </div>
     </div>
+
     <div class="filters-actions">
       <button class="admin-button-secondary" (click)="clearFilters()">Limpiar Filtros</button>
     </div>
@@ -65,7 +100,8 @@
         <div class="table-cell">{{ appointment.serviceName }}</div>
         <div class="table-cell">{{ appointment.employeeName }}</div>
         <div class="table-cell">
-          <select class="status-select" [ngModel]="appointment.status" (ngModelChange)="changeAppointmentStatus(appointment, $event)">
+          <select class="status-select" [ngModel]="appointment.status"
+                  (ngModelChange)="changeAppointmentStatus(appointment, $event)">
             <option value="PENDING">PENDIENTE</option>
             <option value="COMPLETED">COMPLETADA</option>
             <option value="CANCELLED">CANCELADA</option>
@@ -79,4 +115,7 @@
   </div>
 </div>
 
-<app-chat-modal *ngIf="showChatModal" [appointmentId]="selectedAppointmentId" [currentUserId]="currentUserId" (close)="closeChat()"></app-chat-modal>
+<app-chat-modal *ngIf="showChatModal"
+  [appointmentId]="selectedAppointmentId"
+  [currentUserId]="currentUserId"
+  (close)="closeChat()"></app-chat-modal>
