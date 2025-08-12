@@ -8,7 +8,7 @@
 
 .navbar-cosbell {
     background-color: var(--cosbell-dark-purple);
-    padding: 10px 30px;
+    padding: 2px 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;

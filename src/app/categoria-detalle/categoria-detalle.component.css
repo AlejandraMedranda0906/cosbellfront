@@ -1,70 +1,87 @@
 .categoria-header {
   margin-bottom: 40px;
-}
-.categoria-img {
-  max-width: 320px;
+  background: linear-gradient(120deg, #fbeff7 60%, #f7e6f9 100%);
   border-radius: 18px;
-  box-shadow: 0 4px 16px #0002;
+  padding: 32px 0 18px 0;
+  box-shadow: 0 2px 12px #e9b6d6a8;
 }
+
 .categoria-title {
   font-size: 2.5em;
   color: var(--cosbell-dark-purple);
   font-family: 'Tinos', serif;
   font-weight: 700;
-  margin-top: 18px;
+  margin-bottom: 8px;
 }
-.categoria-detalle-container {
-  padding: 30px 0;
+
+.categoria-subtitle {
+  color: #a05a8c;
+  font-size: 1.1em;
+  margin-bottom: 0;
 }
-/* Reutiliza los estilos de servicio-card, servicio-card-title, etc. de la home para coherencia visual */
+
 .servicio-card {
   border-radius: 18px;
   box-shadow: 0 4px 16px #0001;
   background: #fff;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.18s, box-shadow 0.18s;
   border: none;
   overflow: hidden;
   min-height: 420px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  cursor: pointer;
 }
+
 .servicio-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 8px 24px #0002;
+  transform: translateY(-12px) scale(1.04);
+  box-shadow: 0 12px 32px #e9b6d6a8;
 }
+
 .servicio-img-top {
   width: 100%;
   height: 210px;
   object-fit: cover;
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
+  transition: transform 0.3s;
 }
+
+.servicio-card:hover .servicio-img-top {
+  transform: scale(1.08);
+}
+
 .servicio-card-title {
   font-size: 1.3em;
   font-family: 'Tinos', serif;
   color: var(--cosbell-dark-purple);
   font-weight: 700;
 }
+
 .servicio-info {
   font-size: 1.1em;
   color: var(--cosbell-dark-purple);
   font-weight: 600;
 }
+
 .servicio-price {
   color: var(--cosbell-pink);
   font-size: 1.2em;
   font-weight: bold;
 }
+
 .servicio-duration {
   color: #888;
   font-size: 1em;
 }
+
 .servicio-card-text {
   font-size: 1em;
   color: #444;
   margin-bottom: 0.5em;
 }
+
 .servicio-button {
   background: var(--cosbell-pink);
   color: #fff;
@@ -76,8 +93,154 @@
   transition: background 0.2s;
   box-shadow: 0 2px 8px #e7b3d6a0;
 }
+
 .servicio-button:hover {
   background: var(--cosbell-dark-purple);
   color: #fff;
 }
 
+.alert-no-servicios {
+  background-color: #fbeff7;
+  color: #a05a8c;
+  border: 1.5px solid #e9b6d6a8;
+  padding: 28px 18px;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: 500;
+  max-width: 420px;
+  margin: 0 auto;
+  box-shadow: 0 2px 12px #e9b6d6a8;
+}
+
+@media (max-width: 768px) {
+  .categoria-header {
+    padding: 18px 6px;
+    border-radius: 12px;
+  }
+  .categoria-title {
+    font-size: 1.4em;
+  }
+  .categoria-subtitle {
+    font-size: 1em;
+  }
+  .servicio-card {
+    min-height: 320px;
+    border-radius: 12px;
+    padding: 0;
+  }
+  .servicio-img-top {
+    height: 140px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .servicio-card-title {
+    font-size: 1.05em;
+  }
+  .servicio-info,
+  .servicio-price,
+  .servicio-duration {
+    font-size: 0.98em;
+  }
+  .card-body {
+    padding: 16px 6px !important;
+  }
+  .alert-no-servicios {
+    font-size: 1em;
+    padding: 18px 6px;
+    border-radius: 8px;
+  }
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.servicio-info-capsule {
+  display: flex;
+  align-items: center;
+  background: #e2bfc6;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 2px solid #dab2bc;
+  width: fit-content;
+  margin: 0 auto 12px auto;
+  box-shadow: 0 2px 8px #e9b6d633;
+}
+
+.servicio-price-capsule {
+  display: flex;
+  align-items: center;
+  background: #dab2bc;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.15em;
+  padding: 8px 22px 8px 18px;
+  border-radius: 30px 0 0 30px;
+  letter-spacing: 1px;
+  gap: 8px;
+}
+
+.servicio-duration-capsule {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #222;
+  font-weight: 700;
+  font-size: 1.13em;
+  padding: 8px 22px 8px 18px;
+  border-radius: 0 30px 30px 0;
+  border-left: 2px solid #dab2bc;
+  gap: 8px;
+}
+
+.servicio-price-capsule i,
+.servicio-duration-capsule i {
+  font-size: 1em;
+  margin-right: 6px;
+}
+
+@media (max-width: 768px) {
+  .servicio-info-capsule {
+    font-size: 0.97em;
+    width: 100%;
+    justify-content: center;
+  }
+  .servicio-price-capsule,
+  .servicio-duration-capsule {
+    padding: 7px 10px 7px 10px;
+    font-size: 1em;
+  }
+}

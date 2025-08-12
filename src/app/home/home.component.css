@@ -14,9 +14,9 @@
 
 /* HERO VISUAL CON IMAGEN DE FONDO Y OVERLAY */
 .hero-section {
-  background: linear-gradient(rgba(76, 21, 75, 0.5), rgba(221, 94, 138, 0.4)), url('https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+  background: linear-gradient(rgba(76, 21, 75, 0.5), rgba(221, 94, 138, 0.4)), url('https://media.istockphoto.com/id/469916170/es/foto/mujer-joven-relajante-en-back-sesi%C3%B3n-de-masajes-en-el-spa.jpg?s=612x612&w=0&k=20&c=iAfOX5R3KqhcnFVDuu0WG41FyyBKtQV_3hepUqMZvkY=') center/cover no-repeat;
   color: #fff;
-  min-height: 60vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,6 +56,10 @@
   color: white;
 }
 
+
+
+
+
 .btn-my {
   background-color: var(--cosbell-btn-yellow);
   border-color: var(--cosbell-btn-yellow);
@@ -75,6 +79,7 @@
   color: var(--cosbell-dark-purple);
 }
 
+/*tarjetas de servicios*/
 .wellness-item img {
   border: 5px solid var(--cosbell-light-pink);
   object-fit: cover;
@@ -436,8 +441,10 @@
   margin: 20px auto 40px auto;
   max-width: 1200px;
 }
+
+/*servicio*/
 .categoria-card {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.257); /* Más transparente */
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.10);
   padding: 24px 18px;
@@ -447,13 +454,15 @@
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   border: 1px solid var(--cosbell-light-pink);
+   overflow: hidden; /* Para que la imagen no se salga */
+    height: 100%;
 }
 .categoria-card:hover {
   transform: translateY(-5px) scale(1.03);
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
 }
 .categoria-img {
-  max-width: 220px;
+  max-width: 1800px;
   border-radius: 12px;
   box-shadow: 0 2px 8px #0001;
 }
@@ -516,5 +525,39 @@
 }
 
 .about-img:hover {
-  transform: scale(1.03); /* (Opcional) efecto al pasar el mouse */
+  transform: scale(2.03); /* (Opcional) efecto al pasar el mouse */
+}
+
+
+.categoria-card .categoria-img {
+  width: 100% !important;
+  height: 230px !important;    /* Ajusta la altura a tu gusto */
+  object-fit: cover !important;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  display: block;
+}
+
+
+@media (max-width: 768px) {
+  .categorias-section {
+    padding: 10px;
+  }
+  .categoria-card {
+    padding: 0;
+    margin-bottom: 18px;
+    border-radius: 12px;
+  }
+  .categoria-card .categoria-img {
+    height: 140px !important; /* Menor altura para móvil */
+    border-radius: 12px 12px 0 0;
+  }
+  .categoria-card-title {
+    font-size: 1.1em;
+    margin: 12px 0;
+  }
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }

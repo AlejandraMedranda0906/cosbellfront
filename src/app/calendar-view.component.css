@@ -1,34 +1,34 @@
-/* Fondo general y contenedor */
 .calendar-container {
   background-color: #F8F4EC;
-  border-radius: 0; /* opcional: quitar bordes redondos para todo ancho */
-  box-shadow: none; /* opcional: quitar sombra si ya no se necesita */
-  padding: 30px 10px;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 20px 2vw;
   margin: 0;
   width: 100vw;
   max-width: 100vw;
 }
 
-
 .fc {
   background: #fff;
-  border-radius: 90px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
   padding: 10px;
 }
 
 .fc-toolbar-title {
   color: var(--cosbell-dark-purple, #6C5B7B);
-  font-size: 2em;
-  font-weight: 600;
+  font-size: 2.1em;
+  font-weight: 700;
 }
 
 .fc-button {
   background-color: var(--cosbell-btn-yellow, #eab308);
-  color: #af5b5b;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 7px;
   font-weight: 600;
+  font-size: 1.1em;
+  padding: 8px 18px;
   transition: background-color 0.3s;
 }
 .fc-button:hover, .fc-button:focus {
@@ -37,50 +37,84 @@
 
 .fc-col-header-cell-cushion, .fc-timegrid-slot-label-cushion {
   color: var(--cosbell-dark-purple, #6C5B7B);
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.1em;
+  padding: 10px 0;
+}
+
+/* Aumenta el alto de las filas del grid */
+.fc-timegrid-slot {
+  height: 56px !important;
+  min-height: 56px !important;
 }
 
 /* Bloques disponibles (verde) */
-.fc-bg-event {
-  background-color: #2576d3 !important;
-  opacity: 0.18 !important;
-  border-radius: 6px;
-}
-
-/* Bloques ocupados (gris claro) */
-.fc-bg-event[style*='#e5e7eb'] {
-  background-color: #5c5f66 !important;
-  opacity: 0.22 !important;
-  border-radius: 6px;
-}
-
-/* Citas reales (gris oscuro) */
-.fc-event-main {
-  background-color: #8d8a8a !important;
-  color: #fff !important;
+.fc-bg-event[style*='#25d366'] {
+  background-color: #b6f5c3 !important;
+  opacity: 1 !important;
   border-radius: 10px;
-  font-weight: 600;
-  font-size: 1em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
-/* Tooltip para eventos */
+/* Bloques ocupados (morado fuerte) */
+.fc-bg-event[style*='#e5e7eb'] {
+  background-color: #6C5B7B !important;
+  opacity: 0.85 !important;
+  border-radius: 10px;
+}
+
+/* Letras grandes y blancas para "Ocupado" */
+.fc-bg-event[style*='#6C5B7B'] .fc-event-title,
+.fc-bg-event[style*='#e5e7eb'] .fc-event-title {
+  color: #fff !important;
+  font-size: 1.18em !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+/* Citas reales (agendadas) - azul fuerte */
+.fc-event-main {
+  background-color: #3b5998 !important;
+  color: #fff !important;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1.18em;
+  box-shadow: 0 2px 12px rgba(108,91,123,0.13);
+  padding: 8px 0;
+  letter-spacing: 0.5px;
+}
+
+/* Letras grandes para "Agendado" */
 .fc-event-title {
-  color: var(--cosbell-dark-purple, #6C5B7B);
-  font-size: 1em;
-  font-weight: 600;
+  color: #fff !important;
+  font-size: 1.18em;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
-/* Ajustes responsivos */
+/* Responsive: todo flexible y letras grandes en móvil */
 @media (max-width: 800px) {
   .calendar-container {
-    padding: 10px 2px;
+    padding: 6px 1vw;
     max-width: 99vw;
   }
   .fc {
-    padding: 2px;
+    padding: 1px;
   }
   .fc-toolbar-title {
-    font-size: 1.2em;
+    font-size: 1em;
   }
-} 
+  .fc-timegrid-slot {
+    height: 32px !important;
+    min-height: 32px !important;
+  }
+  .fc-event-main,
+  .fc-event-title,
+  .fc-bg-event[style*='#6C5B7B'] .fc-event-title,
+  .fc-bg-event[style*='#e5e7eb'] .fc-event-title {
+    font-size: 1em !important;
+    padding: 4px 0;
+  }
+}
